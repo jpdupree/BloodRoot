@@ -304,8 +304,9 @@
 </footer>
 
 <script>
-  const REFRESH_MS = 60000;
+  const REFRESH_MS = 15000;
   let raceData = null;
+  let lastFetchAt = null;
 
   function fmtDuration(seconds) {
     if (seconds == null || isNaN(seconds) || seconds < 0) return '—';
@@ -592,17 +593,18 @@
 
   async function load() {
     try {
-      const res = await fetch('data.json?_=' + Date.now());
+      const res = await fetch('data.json?_=' + Date.now(), {
+        cache: 'no-store',
+        headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
+      });
       if (!res.ok) throw new Error('Failed to load data.json');
       raceData = await res.json();
+      lastFetchAt = new Date();
       renderCutoffs(raceData.race);
       document.getElementById('runners').innerHTML =
         raceData.runners.map(r => renderRunner(r, raceData.race)).join('');
-      const lu = raceData.lastUpdated
-        ? `Updated ${new Date(raceData.lastUpdated).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`
-        : 'Awaiting start';
-      document.getElementById('last-updated').textContent = lu;
       document.getElementById('error').style.display = 'none';
+      updateLastUpdatedLabel();
       tick();
     } catch (err) {
       document.getElementById('error').style.display = 'block';
@@ -611,8 +613,26 @@
     }
   }
 
+  function updateLastUpdatedLabel() {
+    if (!raceData) return;
+    const lu = raceData.lastUpdated
+      ? `Data updated ${new Date(raceData.lastUpdated).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`
+      : 'Awaiting start';
+    let live = '';
+    if (lastFetchAt) {
+      const ago = Math.max(0, Math.floor((Date.now() - lastFetchAt.getTime()) / 1000));
+      live = ago < 5 ? ' · live' : ` · checked ${ago}s ago`;
+    }
+    document.getElementById('last-updated').textContent = lu + live;
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') load();
+  });
+
   load();
   setInterval(tick, 1000);
+  setInterval(updateLastUpdatedLabel, 1000);
   setInterval(load, REFRESH_MS);
 </script>
 
