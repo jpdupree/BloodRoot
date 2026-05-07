@@ -364,6 +364,13 @@
     const W = 1000, H = 160, padTop = 8, padBot = 8;
     const usableH = H - padTop - padBot;
 
+    let gainM = 0;
+    for (let i = 1; i < gpxPoints.length; i++) {
+      const dz = gpxPoints[i].ele - gpxPoints[i - 1].ele;
+      if (dz > 0) gainM += dz;
+    }
+    const gainPerLapFt = Math.round(metersToFeet(gainM));
+
     const points = gpxPoints.map(p => {
       const x = (p.dist / totalDistance) * W;
       const y = padTop + usableH - ((p.ele - elevMin) / range) * usableH;
@@ -387,8 +394,8 @@
 
     document.getElementById('elev-stats').innerHTML =
       `<strong>${metersToMiles(totalDistance).toFixed(2)} mi</strong> loop · ` +
-      `<strong>${Math.round(metersToFeet(elevMax - elevMin))} ft</strong> relief · ` +
-      `low ${Math.round(metersToFeet(elevMin))} ft / high ${Math.round(metersToFeet(elevMax))} ft`;
+      `<strong>${gainPerLapFt.toLocaleString()} ft</strong> gain / lap · ` +
+      `<strong>${(gainPerLapFt * 10).toLocaleString()} ft</strong> over 10 laps`;
   }
 
   function runnerLapState(runner, race) {
