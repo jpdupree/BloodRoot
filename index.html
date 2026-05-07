@@ -536,12 +536,12 @@
             <span class="sub">of ${race.totalCutoffHours}:00:00</span>
           </div>
           <div class="stat${c.inProgressLap ? ' live' : ''}">
-            <span class="label">Course</span>
+            <span class="label">Course Total</span>
             <span class="value live-timer" data-base="${c.completedCourseSeconds}" data-since="${c.inProgressLap ? (c.liveSince || '') : ''}">${fmtDuration(c.totalCourseSeconds)}</span>
             <span class="sub">${c.inProgressLap ? 'on course' : 'running total'}</span>
           </div>
           <div class="stat${c.inPit ? ' live' : ''}">
-            <span class="label">Pit</span>
+            <span class="label">Pit Total</span>
             <span class="value live-timer" data-base="${c.completedPitSeconds}" data-since="${c.inPit ? (c.liveSince || '') : ''}">${fmtDuration(c.totalPitSeconds)}</span>
             <span class="sub">${c.inPit ? 'in pit now' : (c.avgPit != null ? 'avg ' + fmtDuration(c.avgPit) : 'no pit yet')}</span>
           </div>
