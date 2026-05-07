@@ -374,8 +374,11 @@
       ? Math.max(0, (now - new Date(lastCompleted.endTime)) / 1000)
       : 0;
 
-    const totalCourseSeconds = lapDurations.reduce((a, b) => a + b, 0) + currentLapSeconds;
-    const totalPitSeconds = pitDurations.reduce((a, b) => a + b, 0) + currentPitSeconds;
+    const completedCourseSeconds = lapDurations.reduce((a, b) => a + b, 0);
+    const completedPitSeconds = pitDurations.reduce((a, b) => a + b, 0);
+    const completedRaceSeconds = completedCourseSeconds + completedPitSeconds;
+    const totalCourseSeconds = completedCourseSeconds + currentLapSeconds;
+    const totalPitSeconds = completedPitSeconds + currentPitSeconds;
     const raceSeconds = totalCourseSeconds + totalPitSeconds;
 
     const lapHours = lapDurations.reduce((a, b) => a + b, 0) / 3600;
@@ -418,6 +421,7 @@
       lapsDone: lapDurations.length,
       milesDone: lapDurations.length * race.loopDistance,
       raceSeconds, totalCourseSeconds, totalPitSeconds,
+      completedRaceSeconds, completedCourseSeconds, completedPitSeconds,
       currentLapSeconds, currentPitSeconds,
       avgLap, lastLap, avgPit, paceSecPerMile,
       totalCal, totalFluid, totalSodium,
@@ -528,17 +532,17 @@
           </div>
           <div class="stat">
             <span class="label">Race Time</span>
-            <span class="value">${fmtDuration(c.raceSeconds)}</span>
+            <span class="value live-timer" data-base="${c.completedRaceSeconds}" data-since="${c.liveSince || ''}">${fmtDuration(c.raceSeconds)}</span>
             <span class="sub">of ${race.totalCutoffHours}:00:00</span>
           </div>
           <div class="stat${c.inProgressLap ? ' live' : ''}">
             <span class="label">Course</span>
-            <span class="value">${fmtDuration(c.totalCourseSeconds)}</span>
+            <span class="value live-timer" data-base="${c.completedCourseSeconds}" data-since="${c.inProgressLap ? (c.liveSince || '') : ''}">${fmtDuration(c.totalCourseSeconds)}</span>
             <span class="sub">${c.inProgressLap ? 'on course' : 'running total'}</span>
           </div>
           <div class="stat${c.inPit ? ' live' : ''}">
             <span class="label">Pit</span>
-            <span class="value">${fmtDuration(c.totalPitSeconds)}</span>
+            <span class="value live-timer" data-base="${c.completedPitSeconds}" data-since="${c.inPit ? (c.liveSince || '') : ''}">${fmtDuration(c.totalPitSeconds)}</span>
             <span class="sub">${c.inPit ? 'in pit now' : (c.avgPit != null ? 'avg ' + fmtDuration(c.avgPit) : 'no pit yet')}</span>
           </div>
           ${(() => {
@@ -559,7 +563,7 @@
             return `
               <div class="stat${liveCls}">
                 <span class="label">Live</span>
-                <span class="value live-timer" data-since="${c.liveSince || ''}">${liveValue}</span>
+                <span class="value live-timer" data-base="0" data-since="${c.liveSince || ''}">${liveValue}</span>
                 <span class="sub">${liveSub}</span>
               </div>`;
           })()}
@@ -636,10 +640,11 @@
       el.textContent = fmtDuration(diff);
       el.style.color = 'var(--text)';
     }
-    document.querySelectorAll('.live-timer[data-since]').forEach(t => {
+    document.querySelectorAll('.live-timer').forEach(t => {
       const since = t.dataset.since;
       if (!since) return;
-      const seconds = Math.max(0, (Date.now() - new Date(since).getTime()) / 1000);
+      const base = parseFloat(t.dataset.base) || 0;
+      const seconds = base + Math.max(0, (Date.now() - new Date(since).getTime()) / 1000);
       t.textContent = fmtDuration(seconds);
     });
   }
