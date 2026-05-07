@@ -214,6 +214,57 @@
     letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted);
     text-align: center;
   }
+
+  .config {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 14px 18px; margin-bottom: 18px;
+  }
+  .config-status {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .status-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex: none;
+    background: var(--text-muted);
+  }
+  .status-dot.connected { background: var(--green); box-shadow: 0 0 8px var(--green); }
+  .status-dot.error { background: var(--red); box-shadow: 0 0 8px var(--red); }
+  .status-text {
+    flex: 1 1 auto; min-width: 200px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim);
+  }
+  .status-text strong { color: var(--text); font-weight: 600; }
+  .config-form { margin-top: 14px; display: grid; gap: 10px; }
+  .config-form[hidden] { display: none; }
+  .config-form .row { display: grid; grid-template-columns: 110px 1fr; gap: 10px; align-items: center; }
+  @media (max-width: 480px) { .config-form .row { grid-template-columns: 1fr; gap: 4px; } }
+  .config-form label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .config-form input {
+    background: var(--bg-elevated); color: var(--text);
+    border: 1px solid var(--border-bright); border-radius: 4px;
+    padding: 10px 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    width: 100%;
+  }
+  .config-form input:focus { outline: none; border-color: var(--accent); }
+  .config-help {
+    font-size: 11px; color: var(--text-dim); line-height: 1.5;
+    background: var(--bg-elevated); padding: 12px; border-radius: 4px;
+    border-left: 2px solid var(--accent);
+  }
+  .config-help a { color: var(--accent); }
+  .config-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .event-status {
+    font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+    margin-left: 6px; padding: 2px 5px; border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .event-status.syncing { color: var(--blue); border: 1px solid var(--blue); }
+  .event-status.synced { color: var(--green); border: 1px solid rgba(110, 231, 168, 0.4); }
+  .event-status.queued { color: var(--text-muted); border: 1px solid var(--border); }
+  .event-status.error { color: var(--red); border: 1px solid var(--red); cursor: pointer; }
 </style>
 </head>
 <body>
@@ -228,12 +279,39 @@
   <a class="nav-link" href="index.html">Dashboard →</a>
 </header>
 
+<section class="config" id="config">
+  <div class="config-status">
+    <span class="status-dot" id="config-dot"></span>
+    <span class="status-text" id="config-text">Not connected · button presses will be queued for copy-paste.</span>
+    <button class="ctrl-btn" id="config-toggle">Setup</button>
+  </div>
+  <div class="config-form" id="config-form" hidden>
+    <div class="config-help">
+      Generate a <strong>fine-grained</strong> personal access token at
+      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a>
+      with <strong>Repository access → Only select repositories</strong> (this repo) and <strong>Repository permissions → Contents: Read and write</strong>.
+      Set expiration to a few weeks. Revoke after the race.
+      The token is stored in this device's localStorage and used only to commit lap times via the GitHub API.
+    </div>
+    <div class="row"><label>Token</label><input type="password" id="cfg-token" placeholder="github_pat_..." autocomplete="off" spellcheck="false" /></div>
+    <div class="row"><label>Owner</label><input type="text" id="cfg-owner" autocomplete="off" spellcheck="false" /></div>
+    <div class="row"><label>Repo</label><input type="text" id="cfg-repo" autocomplete="off" spellcheck="false" /></div>
+    <div class="row"><label>Branch</label><input type="text" id="cfg-branch" autocomplete="off" spellcheck="false" /></div>
+    <div class="row"><label>Path</label><input type="text" id="cfg-path" autocomplete="off" spellcheck="false" /></div>
+    <div class="config-actions">
+      <button class="ctrl-btn primary" id="cfg-save">Connect</button>
+      <button class="ctrl-btn" id="cfg-disconnect">Disconnect</button>
+    </div>
+  </div>
+</section>
+
 <section id="runners"></section>
 
 <section class="unsent">
   <div class="unsent-head">
-    <span class="unsent-title">Unsent · Copy + paste to Claude</span>
+    <span class="unsent-title">Manual fallback · Copy + paste to Claude</span>
     <div class="unsent-actions">
+      <button id="sync-queued" class="ctrl-btn">Retry sync</button>
       <button id="copy-all" class="ctrl-btn primary">Copy</button>
       <button id="mark-sent" class="ctrl-btn">Mark all sent</button>
     </div>
@@ -249,12 +327,145 @@
     { id: 'oppenheimer', name: 'Oppenheimer' }
   ];
   const STORAGE_KEY = 'pit-board-events-v1';
+  const CONFIG_KEY = 'pit-board-config-v1';
 
   function loadStore() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
     catch (e) { return {}; }
   }
   function saveStore(s) { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+
+  function loadConfig() {
+    try { return JSON.parse(localStorage.getItem(CONFIG_KEY)) || null; }
+    catch (e) { return null; }
+  }
+  function saveConfig(c) { localStorage.setItem(CONFIG_KEY, JSON.stringify(c)); }
+  function clearConfig() { localStorage.removeItem(CONFIG_KEY); }
+  function hasToken() { const c = loadConfig(); return !!(c && c.token && c.owner && c.repo && c.branch && c.path); }
+
+  function detectDefaults() {
+    const host = location.hostname;
+    let owner = 'jpdupree', repo = 'BloodRoot';
+    if (host.endsWith('.github.io')) {
+      owner = host.split('.')[0];
+      const parts = location.pathname.split('/').filter(Boolean);
+      if (parts.length && !parts[0].endsWith('.html')) repo = parts[0];
+    }
+    return { owner, repo, branch: 'main', path: 'data.json', token: '' };
+  }
+
+  function utf8ToBase64(s) { return btoa(unescape(encodeURIComponent(s))); }
+  function base64ToUtf8(b) { return decodeURIComponent(escape(atob(b.replace(/\s/g, '')))); }
+
+  async function ghGetData(config) {
+    const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${encodeURIComponent(config.path)}?ref=${encodeURIComponent(config.branch)}`;
+    const res = await fetch(url, {
+      headers: { Authorization: `token ${config.token}`, Accept: 'application/vnd.github.v3+json' },
+      cache: 'no-store'
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      const err = new Error(`GET ${res.status}: ${text.slice(0, 200)}`);
+      err.status = res.status;
+      throw err;
+    }
+    const json = await res.json();
+    return { sha: json.sha, content: JSON.parse(base64ToUtf8(json.content)) };
+  }
+
+  async function ghPutData(config, data, sha, message) {
+    const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${encodeURIComponent(config.path)}`;
+    const body = {
+      message, sha, branch: config.branch,
+      content: utf8ToBase64(JSON.stringify(data, null, 2) + '\n')
+    };
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        Authorization: `token ${config.token}`,
+        Accept: 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      const err = new Error(`PUT ${res.status}: ${text.slice(0, 200)}`);
+      err.status = res.status;
+      throw err;
+    }
+    return res.json();
+  }
+
+  async function commitEvent(runnerId, ev) {
+    const config = loadConfig();
+    if (!config || !config.token) throw new Error('Not connected');
+    const runnerName = (RUNNERS.find(r => r.id === runnerId) || {}).name || runnerId;
+
+    for (let attempt = 0; attempt < 4; attempt++) {
+      const { sha, content } = await ghGetData(config);
+      const runner = (content.runners || []).find(r => r.id === runnerId);
+      if (!runner) throw new Error(`Runner "${runnerId}" not found in data.json`);
+      if (!runner.laps) runner.laps = [];
+
+      let lap = runner.laps.find(l => l.lap === ev.lap);
+      if (!lap) {
+        lap = { lap: ev.lap };
+        runner.laps.push(lap);
+        runner.laps.sort((a, b) => a.lap - b.lap);
+      }
+      const field = ev.action === 'out' ? 'startTime' : 'endTime';
+      if (lap[field] === ev.ts) return; // already applied
+      lap[field] = ev.ts;
+      content.lastUpdated = new Date().toISOString();
+
+      const time = new Date(ev.ts).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', second: '2-digit' });
+      const action = ev.action === 'out' ? `signed out for lap ${ev.lap}` : `signed in (lap ${ev.lap} done)`;
+      const message = `pit-board: ${runnerName} ${action} at ${time}`;
+
+      try {
+        await ghPutData(config, content, sha, message);
+        return;
+      } catch (err) {
+        if (err.status === 409 && attempt < 3) continue;
+        throw err;
+      }
+    }
+    throw new Error('Too many sha conflicts');
+  }
+
+  async function syncEvent(runnerId, eventId) {
+    const store = loadStore();
+    const ev = (store[runnerId]?.events || []).find(e => e.id === eventId);
+    if (!ev) return;
+    ev.syncStatus = 'syncing'; ev.error = null;
+    saveStore(store); render();
+    try {
+      await commitEvent(runnerId, ev);
+      const s2 = loadStore();
+      const e2 = (s2[runnerId]?.events || []).find(e => e.id === eventId);
+      if (e2) { e2.syncStatus = 'synced'; e2.sent = true; e2.error = null; }
+      saveStore(s2);
+    } catch (err) {
+      const s2 = loadStore();
+      const e2 = (s2[runnerId]?.events || []).find(e => e.id === eventId);
+      if (e2) { e2.syncStatus = 'error'; e2.error = String(err.message || err); }
+      saveStore(s2);
+    }
+    render();
+  }
+
+  async function syncAllQueued() {
+    const store = loadStore();
+    const tasks = [];
+    for (const r of RUNNERS) {
+      const events = (store[r.id]?.events || []);
+      for (const e of events) {
+        if (e.syncStatus === 'queued' || e.syncStatus === 'error') tasks.push([r.id, e.id]);
+      }
+    }
+    for (const [rid, eid] of tasks) await syncEvent(rid, eid);
+  }
 
   function getRunnerEvents(id) {
     const store = loadStore();
@@ -276,13 +487,16 @@
     const outCount = events.filter(e => e.action === 'out').length;
     const lap = action === 'out' ? outCount + 1 : outCount;
     const now = new Date();
-    events.push({
+    const ev = {
       id: now.getTime() + '-' + Math.random().toString(36).slice(2, 6),
       ts: now.toISOString(),
-      action, lap, sent: false
-    });
+      action, lap, sent: false,
+      syncStatus: hasToken() ? 'syncing' : 'queued'
+    };
+    events.push(ev);
     saveStore(store);
     render();
+    if (ev.syncStatus === 'syncing') syncEvent(runnerId, ev.id);
   }
 
   function deleteEvent(runnerId, eventId) {
@@ -310,8 +524,12 @@
     const next = new Date(cur);
     next.setHours(+m[1], +m[2], +(m[3] || 0), 0);
     event.ts = next.toISOString();
+    if (hasToken() && event.syncStatus !== 'queued') {
+      event.syncStatus = 'syncing'; event.error = null;
+    }
     saveStore(store);
     render();
+    if (hasToken() && event.syncStatus === 'syncing') syncEvent(runnerId, eventId);
   }
 
   function markAllSent() {
@@ -353,11 +571,84 @@
     const store = loadStore();
     const all = [];
     for (const r of RUNNERS) {
-      const events = ((store[r.id] || {}).events || []).filter(e => !e.sent);
+      const events = ((store[r.id] || {}).events || [])
+        .filter(e => !e.sent && e.syncStatus !== 'synced');
       for (const e of events) all.push({ name: r.name, ev: e });
     }
     all.sort((a, b) => new Date(a.ev.ts) - new Date(b.ev.ts));
     return all.map(x => eventMessage(x.name, x.ev)).join('\n');
+  }
+
+  function hasQueuedOrError() {
+    const store = loadStore();
+    for (const r of RUNNERS) {
+      const events = (store[r.id]?.events || []);
+      if (events.some(e => e.syncStatus === 'queued' || e.syncStatus === 'error')) return true;
+    }
+    return false;
+  }
+
+  function renderConfigStatus() {
+    const c = loadConfig();
+    const dot = document.getElementById('config-dot');
+    const text = document.getElementById('config-text');
+    if (c && c.token) {
+      const masked = c.token.length > 8 ? c.token.slice(0, 4) + '…' + c.token.slice(-4) : '••••';
+      dot.className = 'status-dot connected';
+      text.innerHTML = `Connected · <strong>${c.owner}/${c.repo}</strong> @ <strong>${c.branch}</strong> · token ${masked}`;
+    } else {
+      dot.className = 'status-dot';
+      text.textContent = 'Not connected · button presses will be queued for copy-paste.';
+    }
+  }
+
+  function openConfigForm() {
+    const form = document.getElementById('config-form');
+    const c = loadConfig() || detectDefaults();
+    document.getElementById('cfg-token').value = c.token || '';
+    document.getElementById('cfg-owner').value = c.owner || '';
+    document.getElementById('cfg-repo').value = c.repo || '';
+    document.getElementById('cfg-branch').value = c.branch || 'main';
+    document.getElementById('cfg-path').value = c.path || 'data.json';
+    form.hidden = false;
+  }
+
+  async function saveConfigFromForm() {
+    const c = {
+      token: document.getElementById('cfg-token').value.trim(),
+      owner: document.getElementById('cfg-owner').value.trim(),
+      repo: document.getElementById('cfg-repo').value.trim(),
+      branch: document.getElementById('cfg-branch').value.trim() || 'main',
+      path: document.getElementById('cfg-path').value.trim() || 'data.json'
+    };
+    if (!c.token || !c.owner || !c.repo) {
+      alert('Token, owner, and repo are required.');
+      return;
+    }
+    const btn = document.getElementById('cfg-save');
+    const orig = btn.textContent;
+    btn.textContent = 'Testing…'; btn.disabled = true;
+    try {
+      await ghGetData(c);
+      saveConfig(c);
+      btn.textContent = 'Connected ✓';
+      document.getElementById('config-form').hidden = true;
+      renderConfigStatus();
+      if (hasQueuedOrError()) await syncAllQueued();
+      render();
+    } catch (err) {
+      alert(`Could not connect:\n${err.message}\n\nCheck token scope (Contents: Read and write) and that owner/repo/branch/path are correct.`);
+    } finally {
+      btn.disabled = false;
+      setTimeout(() => { btn.textContent = orig; }, 2000);
+    }
+  }
+
+  function disconnectConfig() {
+    if (!confirm('Disconnect and remove the stored token from this device?')) return;
+    clearConfig();
+    renderConfigStatus();
+    render();
   }
 
   function renderRunner(runner) {
@@ -378,11 +669,18 @@
     }
 
     const recent = s.events.slice(-6).reverse();
+    const statusBadge = (e) => {
+      const st = e.syncStatus || (e.sent ? 'synced' : 'queued');
+      if (st === 'syncing') return '<span class="event-status syncing">sync…</span>';
+      if (st === 'synced') return '<span class="event-status synced">synced</span>';
+      if (st === 'error') return `<span class="event-status error" data-action="resync" data-runner="${runner.id}" data-event="${e.id}" title="${(e.error || '').replace(/"/g, '&quot;')}">retry</span>`;
+      return '<span class="event-status queued">queued</span>';
+    };
     const recentHtml = recent.length === 0
       ? '<div class="empty">No events yet</div>'
       : recent.map(e => `
           <div class="event ${e.sent ? 'sent' : ''}">
-            <span class="event-action ${e.action}">${e.action === 'out' ? '→ Out, lap ' + e.lap : '← In, lap ' + e.lap}${e.sent ? ' · sent' : ''}</span>
+            <span class="event-action ${e.action}">${e.action === 'out' ? '→ Out, lap ' + e.lap : '← In, lap ' + e.lap}${statusBadge(e)}</span>
             <span class="event-time" data-action="edit" data-runner="${runner.id}" data-event="${e.id}">${fmtClock(e.ts)}</span>
             <button class="event-del" data-action="del" data-runner="${runner.id}" data-event="${e.id}" aria-label="Delete">×</button>
           </div>
@@ -415,6 +713,8 @@
     document.getElementById('unsent-text').textContent = unsent || '(no unsent events)';
     document.getElementById('copy-all').disabled = !unsent;
     document.getElementById('mark-sent').disabled = !unsent;
+    document.getElementById('sync-queued').disabled = !hasToken() || !hasQueuedOrError();
+    renderConfigStatus();
     tick();
   }
 
@@ -455,15 +755,26 @@
     if (action === 'press') press(t.dataset.runner, t.dataset.press);
     else if (action === 'edit') editEventTime(t.dataset.runner, t.dataset.event);
     else if (action === 'del') deleteEvent(t.dataset.runner, t.dataset.event);
+    else if (action === 'resync') syncEvent(t.dataset.runner, t.dataset.event);
   });
 
   document.getElementById('copy-all').addEventListener('click', copyAll);
   document.getElementById('mark-sent').addEventListener('click', () => {
     if (confirm('Mark all events as sent? They\'ll be hidden from the unsent list.')) markAllSent();
   });
+  document.getElementById('sync-queued').addEventListener('click', () => { syncAllQueued(); });
   document.getElementById('reset').addEventListener('click', (e) => {
     e.preventDefault(); resetAll();
   });
+  document.getElementById('config-toggle').addEventListener('click', () => {
+    const f = document.getElementById('config-form');
+    if (f.hidden) openConfigForm();
+    else f.hidden = true;
+  });
+  document.getElementById('cfg-save').addEventListener('click', saveConfigFromForm);
+  document.getElementById('cfg-disconnect').addEventListener('click', disconnectConfig);
+
+  if (!hasToken()) openConfigForm();
 
   render();
   setInterval(tick, 1000);
