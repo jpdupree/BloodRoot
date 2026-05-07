@@ -1,7 +1,7 @@
 {
   "race": {
     "name": "100 Mile Race",
-    "startTime": "2026-05-08T07:00:00-04:00",
+    "startTime": "2026-05-06T18:00:00-04:00",
     "loopDistance": 10,
     "totalLoops": 10,
     "totalCutoffHours": 38,
@@ -20,58 +20,72 @@
       "laps": [
         {
           "lap": 1,
-          "startTime": "2026-05-07T16:32:30.775Z",
-          "endTime": "2026-05-07T16:32:37.455Z"
+          "startTime": "2026-05-06T18:00:00-04:00",
+          "endTime": "2026-05-06T20:35:00-04:00",
+          "calories": 520,
+          "fluidOz": 42,
+          "sodiumMg": 1100,
+          "notes": "strong start, good vibes"
         },
         {
           "lap": 2,
-          "startTime": "2026-05-07T16:32:51.355Z",
-          "endTime": "2026-05-07T16:32:56.961Z"
+          "startTime": "2026-05-06T20:43:00-04:00",
+          "endTime": "2026-05-06T23:25:00-04:00",
+          "calories": 560,
+          "fluidOz": 45,
+          "sodiumMg": 1200,
+          "gearChanges": "fresh shoes"
         },
         {
           "lap": 3,
-          "startTime": "2026-05-07T16:33:04.553Z",
-          "endTime": "2026-05-07T16:33:05.577Z"
+          "startTime": "2026-05-06T23:35:00-04:00",
+          "endTime": "2026-05-07T02:20:00-04:00",
+          "calories": 580,
+          "fluidOz": 50,
+          "sodiumMg": 1250,
+          "gearChanges": "headlamp on, long sleeve"
         },
         {
           "lap": 4,
-          "startTime": "2026-05-07T16:33:06.238Z",
-          "endTime": "2026-05-07T16:33:06.870Z"
+          "startTime": "2026-05-07T02:32:00-04:00",
+          "endTime": "2026-05-07T05:22:00-04:00",
+          "calories": 600,
+          "fluidOz": 50,
+          "sodiumMg": 1300,
+          "issues": "right toe blister taped"
         },
         {
           "lap": 5,
-          "startTime": "2026-05-07T16:33:07.383Z",
-          "endTime": "2026-05-07T16:33:07.889Z"
+          "startTime": "2026-05-07T05:36:00-04:00",
+          "endTime": "2026-05-07T08:34:00-04:00",
+          "calories": 620,
+          "fluidOz": 50,
+          "sodiumMg": 1350,
+          "gearChanges": "headlamp off, sunscreen, cap",
+          "meds": "ibuprofen 400mg"
         },
         {
           "lap": 6,
-          "endTime": "2026-05-07T16:33:08.979Z",
-          "startTime": "2026-05-07T16:33:08.433Z"
+          "startTime": "2026-05-07T08:50:00-04:00",
+          "endTime": "2026-05-07T11:55:00-04:00",
+          "calories": 580,
+          "fluidOz": 55,
+          "sodiumMg": 1400,
+          "notes": "warming up, took it steady"
         },
         {
           "lap": 7,
-          "startTime": "2026-05-07T16:33:09.534Z",
-          "endTime": "2026-05-07T16:33:10.107Z"
+          "startTime": "2026-05-07T12:15:00-04:00",
+          "endTime": "2026-05-07T15:25:00-04:00",
+          "calories": 540,
+          "fluidOz": 50,
+          "sodiumMg": 1300,
+          "issues": "stomach iffy",
+          "meds": "tums x2"
         },
         {
           "lap": 8,
-          "startTime": "2026-05-07T16:33:10.631Z",
-          "endTime": "2026-05-07T16:33:11.159Z"
-        },
-        {
-          "lap": 9,
-          "endTime": "2026-05-07T16:33:12.527Z",
-          "startTime": "2026-05-07T16:33:11.704Z"
-        },
-        {
-          "lap": 10,
-          "startTime": "2026-05-07T16:33:12.987Z",
-          "endTime": "2026-05-07T16:44:41.873Z"
-        },
-        {
-          "lap": 11,
-          "startTime": "2026-05-07T17:17:56.366Z",
-          "endTime": "2026-05-07T17:18:13.421Z"
+          "startTime": "2026-05-07T15:47:00-04:00"
         }
       ]
     },
@@ -82,30 +96,86 @@
       "laps": [
         {
           "lap": 1,
-          "startTime": "2026-05-07T16:39:07.456Z",
-          "endTime": "2026-05-07T16:39:12.453Z"
+          "startTime": "2026-05-06T18:00:00-04:00",
+          "endTime": "2026-05-06T20:25:00-04:00",
+          "calories": 580,
+          "fluidOz": 45,
+          "sodiumMg": 1100,
+          "notes": "easy effort"
         },
         {
           "lap": 2,
-          "startTime": "2026-05-07T16:39:16.650Z",
-          "endTime": "2026-05-07T16:46:06.041Z"
+          "startTime": "2026-05-06T20:32:00-04:00",
+          "endTime": "2026-05-06T22:59:00-04:00",
+          "calories": 600,
+          "fluidOz": 50,
+          "sodiumMg": 1150,
+          "gearChanges": "fresh socks"
         },
         {
           "lap": 3,
-          "startTime": "2026-05-07T16:49:09.971Z",
-          "endTime": "2026-05-07T16:58:17.304Z"
+          "startTime": "2026-05-06T23:08:00-04:00",
+          "endTime": "2026-05-07T01:38:00-04:00",
+          "calories": 620,
+          "fluidOz": 50,
+          "sodiumMg": 1200,
+          "gearChanges": "headlamp + long sleeve",
+          "notes": "found rhythm"
         },
         {
           "lap": 4,
-          "startTime": "2026-05-07T17:02:16.533Z",
-          "endTime": "2026-05-07T17:06:44.086Z"
+          "startTime": "2026-05-07T01:49:00-04:00",
+          "endTime": "2026-05-07T04:23:00-04:00",
+          "calories": 640,
+          "fluidOz": 55,
+          "sodiumMg": 1250,
+          "gearChanges": "shorts to tights",
+          "issues": "left shin tightness"
         },
         {
           "lap": 5,
-          "startTime": "2026-05-07T17:08:59.383Z"
+          "startTime": "2026-05-07T04:36:00-04:00",
+          "endTime": "2026-05-07T07:13:00-04:00",
+          "calories": 650,
+          "fluidOz": 55,
+          "sodiumMg": 1300,
+          "meds": "salt cap",
+          "notes": "settled in"
+        },
+        {
+          "lap": 6,
+          "startTime": "2026-05-07T07:28:00-04:00",
+          "endTime": "2026-05-07T10:11:00-04:00",
+          "calories": 670,
+          "fluidOz": 58,
+          "sodiumMg": 1350,
+          "gearChanges": "tights to shorts, sunscreen"
+        },
+        {
+          "lap": 7,
+          "startTime": "2026-05-07T10:28:00-04:00",
+          "endTime": "2026-05-07T13:14:00-04:00",
+          "calories": 660,
+          "fluidOz": 55,
+          "sodiumMg": 1400,
+          "notes": "rolling well"
+        },
+        {
+          "lap": 8,
+          "startTime": "2026-05-07T13:33:00-04:00",
+          "endTime": "2026-05-07T16:24:00-04:00",
+          "calories": 640,
+          "fluidOz": 50,
+          "sodiumMg": 1350,
+          "issues": "left knee tight",
+          "meds": "ibuprofen 400mg"
+        },
+        {
+          "lap": 9,
+          "startTime": "2026-05-07T16:45:00-04:00"
         }
       ]
     }
   ],
-  "lastUpdated": "2026-05-07T17:18:14.944Z"
+  "lastUpdated": "2026-05-07T20:45:00.000Z"
 }
