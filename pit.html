@@ -668,7 +668,7 @@
       buttonAction = 'out';
     }
 
-    const recent = s.events.slice(-6).reverse();
+    const recent = s.events.slice(-2).reverse();
     const statusBadge = (e) => {
       const st = e.syncStatus || (e.sent ? 'synced' : 'queued');
       if (st === 'syncing') return '<span class="event-status syncing">sync…</span>';
