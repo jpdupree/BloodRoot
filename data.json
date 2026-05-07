@@ -13,8 +13,23 @@
     }
   },
   "runners": [
-    { "id": "jasmine", "name": "Jasmine", "bib": "Jasmine · #TBD", "laps": [] },
-    { "id": "oppenheimer", "name": "Oppenheimer", "bib": "Oppenheimer · #TBD", "laps": [] }
+    {
+      "id": "jasmine",
+      "name": "Jasmine",
+      "bib": "Jasmine · #TBD",
+      "laps": [
+        {
+          "lap": 1,
+          "startTime": "2026-05-07T16:32:30.775Z"
+        }
+      ]
+    },
+    {
+      "id": "oppenheimer",
+      "name": "Oppenheimer",
+      "bib": "Oppenheimer · #TBD",
+      "laps": []
+    }
   ],
-  "lastUpdated": null
+  "lastUpdated": "2026-05-07T16:32:32.161Z"
 }
