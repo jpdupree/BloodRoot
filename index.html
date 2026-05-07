@@ -569,6 +569,11 @@
               </div>`;
           })()}
           <div class="stat">
+            <span class="label">Pace</span>
+            <span class="value">${fmtPace(c.paceSecPerMile)}</span>
+            <span class="sub">min/mi</span>
+          </div>
+          <div class="stat">
             <span class="label">Avg Lap</span>
             <span class="value">${fmtDuration(c.avgLap)}</span>
             <span class="sub">last: ${fmtDuration(c.lastLap)}</span>
@@ -577,11 +582,6 @@
             <span class="label">Avg Pit</span>
             <span class="value">${fmtDuration(c.avgPit)}</span>
             <span class="sub">last: ${fmtDuration(c.lastPit)}</span>
-          </div>
-          <div class="stat">
-            <span class="label">Pace</span>
-            <span class="value">${fmtPace(c.paceSecPerMile)}</span>
-            <span class="sub">min/mi</span>
           </div>
         </div>
 
