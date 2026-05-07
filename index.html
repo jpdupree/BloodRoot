@@ -128,7 +128,7 @@
   .status-notstarted { color: var(--text-muted); }
 
   .stats {
-    display: grid; grid-template-columns: repeat(7, 1fr);
+    display: grid; grid-template-columns: repeat(8, 1fr);
     border-bottom: 1px solid var(--border);
   }
   .stat {
@@ -264,13 +264,13 @@
     .stats { grid-template-columns: repeat(4, 1fr); }
     .stat { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .stat:nth-child(4n) { border-right: none; }
-    .stat:nth-last-child(-n+3) { border-bottom: none; }
+    .stat:nth-last-child(-n+4) { border-bottom: none; }
   }
   @media (max-width: 800px) {
     .stats { grid-template-columns: repeat(3, 1fr); }
     .stat:nth-child(4n) { border-right: 1px solid var(--border); }
     .stat:nth-child(3n) { border-right: none; }
-    .stat:nth-last-child(-n+1) { border-bottom: none; }
+    .stat:nth-last-child(-n+2) { border-bottom: none; }
   }
   @media (max-width: 500px) {
     body { padding: 20px 16px 60px; }
@@ -279,7 +279,7 @@
     .stat { padding: 14px 12px; }
     .stat:nth-child(3n) { border-right: 1px solid var(--border); }
     .stat:nth-child(2n) { border-right: none; }
-    .stat:nth-last-child(-n+1) { border-bottom: none; }
+    .stat:nth-last-child(-n+2) { border-bottom: none; }
     .cutoffs { grid-template-columns: 1fr 1fr; gap: 16px; }
     .laps-grid { grid-template-columns: repeat(5, 1fr); }
     .laplog table { font-size: 11px; }
@@ -385,6 +385,7 @@
     const avgLap = lapDurations.length ? lapDurations.reduce((a, b) => a + b, 0) / lapDurations.length : null;
     const lastLap = lapDurations.length ? lapDurations[lapDurations.length - 1] : null;
     const avgPit = pitDurations.length ? pitDurations.reduce((a, b) => a + b, 0) / pitDurations.length : null;
+    const lastPit = pitDurations.length ? pitDurations[pitDurations.length - 1] : null;
     const paceSecPerMile = avgLap ? avgLap / race.loopDistance : null;
 
     const completedEntries = laps.filter(l => l.startTime && l.endTime);
@@ -423,7 +424,7 @@
       raceSeconds, totalCourseSeconds, totalPitSeconds,
       completedRaceSeconds, completedCourseSeconds, completedPitSeconds,
       currentLapSeconds, currentPitSeconds,
-      avgLap, lastLap, avgPit, paceSecPerMile,
+      avgLap, lastLap, avgPit, lastPit, paceSecPerMile,
       totalCal, totalFluid, totalSodium,
       calPerHr, fluidPerHr, sodiumPerHr,
       status, projectedFinish,
@@ -571,6 +572,11 @@
             <span class="label">Avg Lap</span>
             <span class="value">${fmtDuration(c.avgLap)}</span>
             <span class="sub">last: ${fmtDuration(c.lastLap)}</span>
+          </div>
+          <div class="stat">
+            <span class="label">Avg Pit</span>
+            <span class="value">${fmtDuration(c.avgPit)}</span>
+            <span class="sub">last: ${fmtDuration(c.lastPit)}</span>
           </div>
           <div class="stat">
             <span class="label">Pace</span>
