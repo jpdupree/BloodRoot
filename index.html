@@ -247,7 +247,13 @@
     font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
     color: var(--accent); width: 30px;
   }
-  .laplog .notes { font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+  .laplog tr.lap-row:has(+ tr.note-row) td { border-bottom: none; padding-bottom: 6px; }
+  .laplog tr.note-row td {
+    padding: 0 8px 12px 8px; padding-left: 38px;
+    font-size: 11px; color: var(--text-dim); line-height: 1.5;
+    border-bottom: 1px solid var(--border);
+  }
+  .laplog tr.note-row:last-child td { border-bottom: none; }
   .laplog tr.empty td { color: var(--text-muted); font-style: italic; }
 
   footer {
@@ -496,7 +502,7 @@
     }).join('');
 
     const lapRows = runner.laps.length === 0
-      ? `<tr class="empty"><td colspan="8" style="text-align:center; padding: 24px;">Awaiting first lap</td></tr>`
+      ? `<tr class="empty"><td colspan="7" style="text-align:center; padding: 24px;">Awaiting first lap</td></tr>`
       : runner.laps.map((l, i) => {
           const dur = (l.startTime && l.endTime)
             ? (new Date(l.endTime) - new Date(l.startTime)) / 1000 : null;
@@ -511,8 +517,11 @@
             ? fmtDuration(pitSec).replace(/^00:/, '') + (next ? '' : ' <span style="color: var(--accent); font-size: 9px;">●</span>')
             : '—';
           const noteParts = [l.gearChanges, l.meds, l.issues, l.notes].filter(Boolean);
+          const noteRow = noteParts.length
+            ? `<tr class="note-row"><td colspan="7">${noteParts.join(' · ')}</td></tr>`
+            : '';
           return `
-            <tr>
+            <tr class="lap-row">
               <td class="lap-num">${l.lap}</td>
               <td class="num">${fmtClockTime(l.endTime)}</td>
               <td class="num">${dur ? fmtDuration(dur).replace(/^00:/, '') : '—'}</td>
@@ -520,8 +529,8 @@
               <td class="num">${l.calories || 0}</td>
               <td class="num">${l.fluidOz || 0}oz</td>
               <td class="num">${l.sodiumMg || 0}</td>
-              <td class="notes">${noteParts.join(' · ') || '—'}</td>
             </tr>
+            ${noteRow}
           `;
         }).join('');
 
@@ -631,7 +640,6 @@
                 <tr>
                   <th>#</th><th>Done</th><th class="num">Lap</th><th class="num">Pit</th>
                   <th class="num">Cal</th><th class="num">Fluid</th><th class="num">Na</th>
-                  <th>Notes</th>
                 </tr>
               </thead>
               <tbody>${lapRows}</tbody>
