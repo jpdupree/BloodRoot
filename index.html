@@ -128,16 +128,25 @@
   .status-notstarted { color: var(--text-muted); }
 
   .stats {
-    display: grid; grid-template-columns: repeat(6, 1fr);
+    display: grid; grid-template-columns: repeat(7, 1fr);
     border-bottom: 1px solid var(--border);
   }
   .stat {
-    padding: 16px 16px; border-right: 1px solid var(--border);
+    padding: 16px 14px; border-right: 1px solid var(--border);
     display: flex; flex-direction: column; gap: 4px;
     min-width: 0;
   }
   .stat:last-child { border-right: none; }
   .stat.live .value { color: var(--accent); }
+  .stat.live-course .value { color: var(--accent); }
+  .stat.live-pit .value { color: var(--green); }
+  .stat.live-course .label, .stat.live-pit .label {
+    animation: liveBlink 2s ease-in-out infinite;
+  }
+  @keyframes liveBlink {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+  }
   .stat .label {
     font-family: 'JetBrains Mono', monospace; font-size: 9px;
     text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted);
@@ -251,20 +260,26 @@
     font-family: 'JetBrains Mono', monospace; font-size: 12px;
   }
 
-  @media (max-width: 1100px) {
-    .stats { grid-template-columns: repeat(3, 1fr); }
-    .stat:nth-child(3) { border-right: none; }
-    .stat:nth-child(1), .stat:nth-child(2), .stat:nth-child(3) {
-      border-bottom: 1px solid var(--border);
-    }
+  @media (max-width: 1300px) {
+    .stats { grid-template-columns: repeat(4, 1fr); }
+    .stat { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .stat:nth-child(4n) { border-right: none; }
+    .stat:nth-last-child(-n+3) { border-bottom: none; }
   }
-  @media (max-width: 640px) {
+  @media (max-width: 800px) {
+    .stats { grid-template-columns: repeat(3, 1fr); }
+    .stat:nth-child(4n) { border-right: 1px solid var(--border); }
+    .stat:nth-child(3n) { border-right: none; }
+    .stat:nth-last-child(-n+1) { border-bottom: none; }
+  }
+  @media (max-width: 500px) {
     body { padding: 20px 16px 60px; }
     h1 { font-size: 32px; }
     .stats { grid-template-columns: repeat(2, 1fr); }
-    .stat { padding: 14px 12px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .stat { padding: 14px 12px; }
+    .stat:nth-child(3n) { border-right: 1px solid var(--border); }
     .stat:nth-child(2n) { border-right: none; }
-    .stat:nth-last-child(-n+2) { border-bottom: none; }
+    .stat:nth-last-child(-n+1) { border-bottom: none; }
     .cutoffs { grid-template-columns: 1fr 1fr; gap: 16px; }
     .laps-grid { grid-template-columns: repeat(5, 1fr); }
     .laplog table { font-size: 11px; }
@@ -390,6 +405,15 @@
 
     const projectedFinish = avgLap ? (avgLap + (avgPit || 0)) * race.totalLoops : null;
 
+    let liveSince = null, liveLapNumber = null;
+    if (inProgressLap) {
+      liveSince = inProgressLap.startTime;
+      liveLapNumber = inProgressLap.lap;
+    } else if (inPit && lastCompleted) {
+      liveSince = lastCompleted.endTime;
+      liveLapNumber = lastCompleted.lap;
+    }
+
     return {
       lapsDone: lapDurations.length,
       milesDone: lapDurations.length * race.loopDistance,
@@ -400,7 +424,8 @@
       calPerHr, fluidPerHr, sodiumPerHr,
       status, projectedFinish,
       lapDurations, pitDurations,
-      inPit, inProgressLap: !!inProgressLap
+      inPit, inProgressLap: !!inProgressLap,
+      liveSince, liveLapNumber
     };
   }
 
@@ -516,6 +541,28 @@
             <span class="value">${fmtDuration(c.totalPitSeconds)}</span>
             <span class="sub">${c.inPit ? 'in pit now' : (c.avgPit != null ? 'avg ' + fmtDuration(c.avgPit) : 'no pit yet')}</span>
           </div>
+          ${(() => {
+            let liveCls = '', liveValue = '—', liveSub;
+            if (c.inProgressLap) {
+              liveCls = ' live-course';
+              liveValue = fmtDuration(c.currentLapSeconds);
+              liveSub = `Lap ${c.liveLapNumber} on course`;
+            } else if (c.inPit) {
+              liveCls = ' live-pit';
+              liveValue = fmtDuration(c.currentPitSeconds);
+              liveSub = `In pit · after lap ${c.liveLapNumber}`;
+            } else if (c.lapsDone >= race.totalLoops && c.lapsDone > 0) {
+              liveSub = 'finished';
+            } else {
+              liveSub = c.lapsDone === 0 ? 'not started' : 'idle';
+            }
+            return `
+              <div class="stat${liveCls}">
+                <span class="label">Live</span>
+                <span class="value live-timer" data-since="${c.liveSince || ''}">${liveValue}</span>
+                <span class="sub">${liveSub}</span>
+              </div>`;
+          })()}
           <div class="stat">
             <span class="label">Avg Lap</span>
             <span class="value">${fmtDuration(c.avgLap)}</span>
@@ -589,6 +636,12 @@
       el.textContent = fmtDuration(diff);
       el.style.color = 'var(--text)';
     }
+    document.querySelectorAll('.live-timer[data-since]').forEach(t => {
+      const since = t.dataset.since;
+      if (!since) return;
+      const seconds = Math.max(0, (Date.now() - new Date(since).getTime()) / 1000);
+      t.textContent = fmtDuration(seconds);
+    });
   }
 
   async function load() {
