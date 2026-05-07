@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>100-Mile Race Command</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0d10;
+    --bg-elevated: #14161b;
+    --bg-card: #1a1d24;
+    --border: #262932;
+    --border-bright: #353946;
+    --text: #e8e6e1;
+    --text-dim: #8a8a8a;
+    --text-muted: #5a5a60;
+    --accent: #ff6b3d;
+    --accent-glow: rgba(255, 107, 61, 0.18);
+    --green: #6ee7a8;
+    --yellow: #f5c451;
+    --red: #ff5959;
+    --blue: #5ec8ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  body {
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(255, 107, 61, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 85% 100%, rgba(94, 200, 255, 0.05) 0%, transparent 40%);
+    background-attachment: fixed;
+    padding: 32px 40px 80px;
+  }
+
+  header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px; margin-bottom: 32px;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .brand { display: flex; flex-direction: column; gap: 6px; }
+  .brand-meta {
+    display: flex; gap: 14px; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--text-muted);
+  }
+  .pulse {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 12px var(--accent);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+  h1 {
+    font-family: 'Fraunces', serif; font-weight: 800;
+    font-size: 44px; line-height: 1; letter-spacing: -0.025em;
+  }
+  h1 em { font-style: italic; color: var(--accent); font-weight: 600; }
+  .race-clock { text-align: right; display: flex; flex-direction: column; gap: 4px; }
+  .race-clock .label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .race-clock .time {
+    font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700;
+    color: var(--text); letter-spacing: -0.02em;
+  }
+
+  .cutoffs {
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    border-radius: 4px; padding: 18px 24px; margin-bottom: 32px;
+    display: grid; grid-template-columns: auto 1fr auto auto auto;
+    gap: 32px; align-items: center;
+  }
+  .cutoffs-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .cutoff-item { display: flex; flex-direction: column; gap: 2px; }
+  .cutoff-item .v { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; }
+  .cutoff-item .l { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; }
+  .cutoff-item.warn .v { color: var(--yellow); }
+  .cutoff-item.danger .v { color: var(--red); }
+
+  .runners { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 1100px) { .runners { grid-template-columns: 1fr; } }
+
+  .runner {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 6px; overflow: hidden; position: relative;
+  }
+  .runner::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+  .runner-head {
+    padding: 24px 28px 20px; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 16px;
+  }
+  .runner-name {
+    font-family: 'Fraunces', serif; font-size: 32px;
+    font-weight: 600; letter-spacing: -0.02em;
+  }
+  .runner-bib {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--text-muted); letter-spacing: 0.1em;
+    text-transform: uppercase; margin-top: 4px;
+  }
+  .status-badge {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 6px 10px; border-radius: 2px; border: 1px solid currentColor;
+  }
+  .status-onpace { color: var(--green); }
+  .status-tight { color: var(--yellow); }
+  .status-offpace { color: var(--red); }
+  .status-notstarted { color: var(--text-muted); }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--border);
+  }
+  .stat {
+    padding: 18px 20px; border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .stat:last-child { border-right: none; }
+  .stat .label {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted);
+  }
+  .stat .value {
+    font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700;
+    letter-spacing: -0.02em; color: var(--text);
+  }
+  .stat .sub { font-size: 10px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+
+  .intake { padding: 20px 28px 24px; border-bottom: 1px solid var(--border); }
+  .intake-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 14px;
+  }
+  .intake-row {
+    display: grid; grid-template-columns: 90px 1fr auto auto;
+    gap: 14px; align-items: center; padding: 8px 0;
+  }
+  .intake-row .name { font-size: 13px; color: var(--text-dim); }
+  .bar-track {
+    height: 6px; background: var(--border); border-radius: 3px;
+    overflow: hidden; position: relative;
+  }
+  .bar-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+  .bar-fill.good { background: var(--green); }
+  .bar-fill.warn { background: var(--yellow); }
+  .bar-fill.low { background: var(--red); }
+  .intake-row .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    font-weight: 600; text-align: right; min-width: 90px;
+  }
+  .intake-row .target {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--text-muted); min-width: 60px; text-align: right;
+  }
+
+  .laps { padding: 20px 28px 28px; }
+  .laps-head {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 14px;
+  }
+  .laps-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .laps-grid {
+    display: grid; grid-template-columns: repeat(10, 1fr);
+    gap: 6px; margin-bottom: 16px;
+  }
+  .lap-cell {
+    aspect-ratio: 1; background: var(--bg-elevated);
+    border: 1px solid var(--border); border-radius: 3px;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    font-family: 'JetBrains Mono', monospace; cursor: default;
+  }
+  .lap-cell .n { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; }
+  .lap-cell .t { font-size: 11px; font-weight: 700; }
+  .lap-cell.done { background: rgba(110, 231, 168, 0.08); border-color: rgba(110, 231, 168, 0.4); }
+  .lap-cell.done .t { color: var(--green); }
+  .lap-cell.slow { background: rgba(245, 196, 81, 0.08); border-color: rgba(245, 196, 81, 0.4); }
+  .lap-cell.slow .t { color: var(--yellow); }
+  .lap-cell.danger { background: rgba(255, 89, 89, 0.08); border-color: rgba(255, 89, 89, 0.4); }
+  .lap-cell.danger .t { color: var(--red); }
+  .lap-cell.current {
+    background: var(--accent-glow); border-color: var(--accent);
+    animation: currentPulse 2s ease-in-out infinite;
+  }
+  .lap-cell.current .t { color: var(--accent); }
+  @keyframes currentPulse {
+    0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+    50% { box-shadow: 0 0 0 4px transparent; }
+  }
+
+  .laplog { border-top: 1px solid var(--border); margin-top: 8px; }
+  .laplog table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .laplog th {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted);
+    text-align: left; padding: 14px 8px 10px; font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+  .laplog th:first-child { padding-left: 0; }
+  .laplog th.num, .laplog td.num { text-align: right; font-family: 'JetBrains Mono', monospace; }
+  .laplog td { padding: 12px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .laplog td:first-child { padding-left: 0; }
+  .laplog tr:last-child td { border-bottom: none; }
+  .laplog .lap-num {
+    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
+    color: var(--accent); width: 30px;
+  }
+  .laplog .notes { font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+  .laplog tr.empty td { color: var(--text-muted); font-style: italic; }
+
+  footer {
+    margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted);
+  }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .swatch { width: 10px; height: 10px; border-radius: 2px; }
+
+  .error-banner {
+    background: rgba(255, 89, 89, 0.1); border: 1px solid var(--red);
+    color: var(--red); padding: 16px; border-radius: 4px; margin-bottom: 24px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  }
+
+  @media (max-width: 640px) {
+    body { padding: 20px 16px 60px; }
+    h1 { font-size: 32px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--border); }
+    .cutoffs { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .laps-grid { grid-template-columns: repeat(5, 1fr); }
+    .laplog table { font-size: 11px; }
+    .laplog th, .laplog td { padding: 8px 4px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="brand-meta">
+      <span class="pulse"></span>
+      <span>Live Race Command</span>
+      <span>· 10 × 10mi loops</span>
+    </div>
+    <h1>One Hundred <em>Miles</em></h1>
+  </div>
+  <div class="race-clock">
+    <span class="label">Race Time Elapsed</span>
+    <span class="time" id="elapsed">--:--:--</span>
+  </div>
+</header>
+
+<div id="cutoffs" class="cutoffs"></div>
+<div id="error" style="display:none;"></div>
+<section id="runners" class="runners"></section>
+
+<footer>
+  <div class="legend">
+    <span class="legend-item"><span class="swatch" style="background: var(--green);"></span>On pace</span>
+    <span class="legend-item"><span class="swatch" style="background: var(--yellow);"></span>Tight</span>
+    <span class="legend-item"><span class="swatch" style="background: var(--red);"></span>Off pace</span>
+    <span class="legend-item"><span class="swatch" style="background: var(--accent);"></span>Current lap</span>
+  </div>
+  <div id="last-updated">—</div>
+</footer>
+
+<script>
+  const REFRESH_MS = 60000;
+  let raceData = null;
+
+  function fmtDuration(seconds) {
+    if (seconds == null || isNaN(seconds) || seconds < 0) return '—';
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+
+  function fmtPace(secondsPerMile) {
+    if (secondsPerMile == null || isNaN(secondsPerMile)) return '—';
+    const m = Math.floor(secondsPerMile / 60);
+    const s = Math.floor(secondsPerMile % 60);
+    return `${m}:${String(s).padStart(2, '0')}`;
+  }
+
+  function fmtClockTime(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  }
+
+  function computeRunner(runner, race) {
+    const laps = runner.laps || [];
+    const lapDurations = laps
+      .filter(l => l.startTime && l.endTime)
+      .map(l => (new Date(l.endTime) - new Date(l.startTime)) / 1000);
+    const totalSeconds = lapDurations.reduce((a, b) => a + b, 0);
+    const avgLap = lapDurations.length ? totalSeconds / lapDurations.length : null;
+    const lastLap = lapDurations.length ? lapDurations[lapDurations.length - 1] : null;
+    const paceSecPerMile = avgLap ? avgLap / race.loopDistance : null;
+    const totalCal = laps.reduce((a, l) => a + (l.calories || 0), 0);
+    const totalFluid = laps.reduce((a, l) => a + (l.fluidOz || 0), 0);
+    const totalSodium = laps.reduce((a, l) => a + (l.sodiumMg || 0), 0);
+    const hours = totalSeconds / 3600;
+    const calPerHr = hours > 0 ? totalCal / hours : 0;
+    const fluidPerHr = hours > 0 ? totalFluid / hours : 0;
+    const sodiumPerHr = hours > 0 ? totalSodium / hours : 0;
+
+    let status = 'notstarted';
+    if (lapDurations.length > 0 && avgLap) {
+      const projected = avgLap * race.totalLoops;
+      if (projected > race.totalCutoffHours * 3600) status = 'offpace';
+      else if (projected > race.lastLapStartCutoffHours * 3600) status = 'tight';
+      else status = 'onpace';
+    }
+
+    const projectedFinish = avgLap ? avgLap * race.totalLoops : null;
+
+    return {
+      lapsDone: lapDurations.length,
+      milesDone: lapDurations.length * race.loopDistance,
+      totalSeconds, avgLap, lastLap, paceSecPerMile,
+      totalCal, totalFluid, totalSodium,
+      calPerHr, fluidPerHr, sodiumPerHr,
+      status, projectedFinish, lapDurations
+    };
+  }
+
+  function lapClass(durationSec) {
+    if (durationSec == null) return '';
+    if (durationSec < 3.3 * 3600) return 'done';
+    if (durationSec < 3.8 * 3600) return 'slow';
+    return 'danger';
+  }
+
+  function intakeClass(actual, target) {
+    if (target === 0) return 'good';
+    const ratio = actual / target;
+    if (ratio >= 0.85) return 'good';
+    if (ratio >= 0.65) return 'warn';
+    return 'low';
+  }
+
+  function statusLabel(s) {
+    return { onpace: 'On Pace', tight: 'Tight', offpace: 'Off Pace', notstarted: 'Not Started' }[s];
+  }
+
+  function renderCutoffs(race) {
+    const start = new Date(race.startTime);
+    const tight = new Date(start.getTime() + race.lastLapStartCutoffHours * 3600 * 1000);
+    const final = new Date(start.getTime() + race.totalCutoffHours * 3600 * 1000);
+    const fmt = d => d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) +
+      (d.toDateString() !== start.toDateString() ? ' D2' : '');
+    document.getElementById('cutoffs').innerHTML = `
+      <span class="cutoffs-label">Cutoffs</span>
+      <div></div>
+      <div class="cutoff-item"><span class="v">${fmt(start)}</span><span class="l">Start</span></div>
+      <div class="cutoff-item warn"><span class="v">${fmt(tight)}</span><span class="l">Last lap start · ${race.lastLapStartCutoffHours}h</span></div>
+      <div class="cutoff-item danger"><span class="v">${fmt(final)}</span><span class="l">Final · ${race.totalCutoffHours}h</span></div>
+    `;
+  }
+
+  function renderRunner(runner, race) {
+    const c = computeRunner(runner, race);
+    const t = race.targets;
+
+    const lapCells = Array.from({ length: race.totalLoops }, (_, i) => {
+      const idx = i;
+      const dur = c.lapDurations[idx];
+      const isCurrent = idx === c.lapsDone && c.status !== 'notstarted' && c.lapsDone < race.totalLoops;
+      let cls = '';
+      if (dur != null) cls = lapClass(dur);
+      if (isCurrent) cls = 'current';
+      const text = dur != null
+        ? fmtDuration(dur).replace(/^00:/, '')
+        : (isCurrent ? '···' : '—');
+      return `<div class="lap-cell ${cls}"><span class="n">L${idx + 1}</span><span class="t">${text}</span></div>`;
+    }).join('');
+
+    const lapRows = runner.laps.length === 0
+      ? `<tr class="empty"><td colspan="7" style="text-align:center; padding: 24px;">Awaiting first lap</td></tr>`
+      : runner.laps.map((l, i) => {
+          const dur = (l.startTime && l.endTime)
+            ? (new Date(l.endTime) - new Date(l.startTime)) / 1000 : null;
+          const noteParts = [l.gearChanges, l.meds, l.issues, l.notes].filter(Boolean);
+          return `
+            <tr>
+              <td class="lap-num">${l.lap}</td>
+              <td class="num">${fmtClockTime(l.endTime)}</td>
+              <td class="num">${dur ? fmtDuration(dur).replace(/^00:/, '') : '—'}</td>
+              <td class="num">${l.calories || 0}</td>
+              <td class="num">${l.fluidOz || 0}oz</td>
+              <td class="num">${l.sodiumMg || 0}</td>
+              <td class="notes">${noteParts.join(' · ') || '—'}</td>
+            </tr>
+          `;
+        }).join('');
+
+    return `
+      <article class="runner">
+        <div class="runner-head">
+          <div>
+            <div class="runner-name">${runner.name}</div>
+            <div class="runner-bib">Bib · ${runner.bib}</div>
+          </div>
+          <span class="status-badge status-${c.status}">${statusLabel(c.status)}</span>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <span class="label">Laps</span>
+            <span class="value">${c.lapsDone}<span style="color: var(--text-muted); font-size: 16px;">/${race.totalLoops}</span></span>
+            <span class="sub">${c.milesDone} mi</span>
+          </div>
+          <div class="stat">
+            <span class="label">Cum Time</span>
+            <span class="value">${fmtDuration(c.totalSeconds)}</span>
+            <span class="sub">of ${race.totalCutoffHours}:00:00</span>
+          </div>
+          <div class="stat">
+            <span class="label">Avg Lap</span>
+            <span class="value">${fmtDuration(c.avgLap)}</span>
+            <span class="sub">last: ${fmtDuration(c.lastLap)}</span>
+          </div>
+          <div class="stat">
+            <span class="label">Pace</span>
+            <span class="value">${fmtPace(c.paceSecPerMile)}</span>
+            <span class="sub">min/mi</span>
+          </div>
+        </div>
+
+        <div class="intake">
+          <div class="intake-title">Intake / Hour</div>
+          <div class="intake-row">
+            <span class="name">Calories</span>
+            <div class="bar-track"><div class="bar-fill ${intakeClass(c.calPerHr, t.caloriesPerHour)}" style="width: ${Math.min(100, (c.calPerHr / t.caloriesPerHour) * 100)}%"></div></div>
+            <span class="num">${Math.round(c.calPerHr)}</span>
+            <span class="target">/ ${t.caloriesPerHour}</span>
+          </div>
+          <div class="intake-row">
+            <span class="name">Fluid</span>
+            <div class="bar-track"><div class="bar-fill ${intakeClass(c.fluidPerHr, t.fluidOzPerHour)}" style="width: ${Math.min(100, (c.fluidPerHr / t.fluidOzPerHour) * 100)}%"></div></div>
+            <span class="num">${c.fluidPerHr.toFixed(1)} oz</span>
+            <span class="target">/ ${t.fluidOzPerHour} oz</span>
+          </div>
+          <div class="intake-row">
+            <span class="name">Sodium</span>
+            <div class="bar-track"><div class="bar-fill ${intakeClass(c.sodiumPerHr, t.sodiumMgPerHour)}" style="width: ${Math.min(100, (c.sodiumPerHr / t.sodiumMgPerHour) * 100)}%"></div></div>
+            <span class="num">${Math.round(c.sodiumPerHr)} mg</span>
+            <span class="target">/ ${t.sodiumMgPerHour} mg</span>
+          </div>
+        </div>
+
+        <div class="laps">
+          <div class="laps-head">
+            <span class="laps-title">Lap Status</span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted);">
+              ${c.lapsDone} done · ${race.totalLoops - c.lapsDone} to go
+            </span>
+          </div>
+          <div class="laps-grid">${lapCells}</div>
+          <div class="laplog">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th><th>Done</th><th class="num">Lap</th>
+                  <th class="num">Cal</th><th class="num">Fluid</th><th class="num">Na</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>${lapRows}</tbody>
+            </table>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  function tick() {
+    if (!raceData) return;
+    const now = new Date();
+    const start = new Date(raceData.race.startTime);
+    let diff = Math.floor((now - start) / 1000);
+    const el = document.getElementById('elapsed');
+    if (diff < 0) {
+      const until = -diff;
+      el.textContent = `-${fmtDuration(until)}`;
+      el.style.color = 'var(--text-muted)';
+    } else {
+      el.textContent = fmtDuration(diff);
+      el.style.color = 'var(--text)';
+    }
+  }
+
+  async function load() {
+    try {
+      const res = await fetch('data.json?_=' + Date.now());
+      if (!res.ok) throw new Error('Failed to load data.json');
+      raceData = await res.json();
+      renderCutoffs(raceData.race);
+      document.getElementById('runners').innerHTML =
+        raceData.runners.map(r => renderRunner(r, raceData.race)).join('');
+      const lu = raceData.lastUpdated
+        ? `Updated ${new Date(raceData.lastUpdated).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`
+        : 'Awaiting start';
+      document.getElementById('last-updated').textContent = lu;
+      document.getElementById('error').style.display = 'none';
+      tick();
+    } catch (err) {
+      document.getElementById('error').style.display = 'block';
+      document.getElementById('error').className = 'error-banner';
+      document.getElementById('error').textContent = `Error loading race data: ${err.message}`;
+    }
+  }
+
+  load();
+  setInterval(tick, 1000);
+  setInterval(load, REFRESH_MS);
+</script>
+
+</body>
+</html>

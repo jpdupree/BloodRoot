@@ -1,0 +1,20 @@
+{
+  "race": {
+    "name": "100 Mile Race",
+    "startTime": "2026-05-08T07:00:00-04:00",
+    "loopDistance": 10,
+    "totalLoops": 10,
+    "totalCutoffHours": 38,
+    "lastLapStartCutoffHours": 35,
+    "targets": {
+      "caloriesPerHour": 250,
+      "fluidOzPerHour": 20,
+      "sodiumMgPerHour": 500
+    }
+  },
+  "runners": [
+    { "id": "jasmine", "name": "Jasmine", "bib": "Jasmine · #TBD", "laps": [] },
+    { "id": "oppenheimer", "name": "Oppenheimer", "bib": "Oppenheimer · #TBD", "laps": [] }
+  ],
+  "lastUpdated": null
+}
