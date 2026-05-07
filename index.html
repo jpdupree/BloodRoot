@@ -128,20 +128,22 @@
   .status-notstarted { color: var(--text-muted); }
 
   .stats {
-    display: grid; grid-template-columns: repeat(4, 1fr);
+    display: grid; grid-template-columns: repeat(6, 1fr);
     border-bottom: 1px solid var(--border);
   }
   .stat {
-    padding: 18px 20px; border-right: 1px solid var(--border);
+    padding: 16px 16px; border-right: 1px solid var(--border);
     display: flex; flex-direction: column; gap: 4px;
+    min-width: 0;
   }
   .stat:last-child { border-right: none; }
+  .stat.live .value { color: var(--accent); }
   .stat .label {
     font-family: 'JetBrains Mono', monospace; font-size: 9px;
     text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted);
   }
   .stat .value {
-    font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700;
     letter-spacing: -0.02em; color: var(--text);
   }
   .stat .sub { font-size: 10px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
@@ -249,12 +251,20 @@
     font-family: 'JetBrains Mono', monospace; font-size: 12px;
   }
 
+  @media (max-width: 1100px) {
+    .stats { grid-template-columns: repeat(3, 1fr); }
+    .stat:nth-child(3) { border-right: none; }
+    .stat:nth-child(1), .stat:nth-child(2), .stat:nth-child(3) {
+      border-bottom: 1px solid var(--border);
+    }
+  }
   @media (max-width: 640px) {
     body { padding: 20px 16px 60px; }
     h1 { font-size: 32px; }
     .stats { grid-template-columns: repeat(2, 1fr); }
-    .stat:nth-child(2) { border-right: none; }
-    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--border); }
+    .stat { padding: 14px 12px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .stat:nth-child(2n) { border-right: none; }
+    .stat:nth-last-child(-n+2) { border-bottom: none; }
     .cutoffs { grid-template-columns: 1fr 1fr; gap: 16px; }
     .laps-grid { grid-template-columns: repeat(5, 1fr); }
     .laplog table { font-size: 11px; }
@@ -320,38 +330,76 @@
 
   function computeRunner(runner, race) {
     const laps = runner.laps || [];
-    const lapDurations = laps
-      .filter(l => l.startTime && l.endTime)
-      .map(l => (new Date(l.endTime) - new Date(l.startTime)) / 1000);
-    const totalSeconds = lapDurations.reduce((a, b) => a + b, 0);
-    const avgLap = lapDurations.length ? totalSeconds / lapDurations.length : null;
+    const now = new Date();
+
+    const lapDurations = [];
+    const pitDurations = [];
+    for (let i = 0; i < laps.length; i++) {
+      const l = laps[i];
+      if (l.startTime && l.endTime) {
+        lapDurations.push((new Date(l.endTime) - new Date(l.startTime)) / 1000);
+      }
+      const next = laps[i + 1];
+      if (l.endTime && next && next.startTime) {
+        pitDurations.push((new Date(next.startTime) - new Date(l.endTime)) / 1000);
+      }
+    }
+
+    const inProgressLap = laps.find(l => l.startTime && !l.endTime);
+    const currentLapSeconds = inProgressLap
+      ? Math.max(0, (now - new Date(inProgressLap.startTime)) / 1000)
+      : 0;
+    const lastCompleted = [...laps].reverse().find(l => l.startTime && l.endTime);
+    const nextStarted = lastCompleted
+      ? laps.some(l => l.startTime && new Date(l.startTime) > new Date(lastCompleted.endTime))
+      : false;
+    const inPit = !!lastCompleted && !nextStarted && lapDurations.length < race.totalLoops;
+    const currentPitSeconds = inPit
+      ? Math.max(0, (now - new Date(lastCompleted.endTime)) / 1000)
+      : 0;
+
+    const totalCourseSeconds = lapDurations.reduce((a, b) => a + b, 0) + currentLapSeconds;
+    const totalPitSeconds = pitDurations.reduce((a, b) => a + b, 0) + currentPitSeconds;
+    const raceSeconds = totalCourseSeconds + totalPitSeconds;
+
+    const lapHours = lapDurations.reduce((a, b) => a + b, 0) / 3600;
+    const avgLap = lapDurations.length ? lapDurations.reduce((a, b) => a + b, 0) / lapDurations.length : null;
     const lastLap = lapDurations.length ? lapDurations[lapDurations.length - 1] : null;
+    const avgPit = pitDurations.length ? pitDurations.reduce((a, b) => a + b, 0) / pitDurations.length : null;
     const paceSecPerMile = avgLap ? avgLap / race.loopDistance : null;
-    const totalCal = laps.reduce((a, l) => a + (l.calories || 0), 0);
-    const totalFluid = laps.reduce((a, l) => a + (l.fluidOz || 0), 0);
-    const totalSodium = laps.reduce((a, l) => a + (l.sodiumMg || 0), 0);
-    const hours = totalSeconds / 3600;
-    const calPerHr = hours > 0 ? totalCal / hours : 0;
-    const fluidPerHr = hours > 0 ? totalFluid / hours : 0;
-    const sodiumPerHr = hours > 0 ? totalSodium / hours : 0;
+
+    const completedEntries = laps.filter(l => l.startTime && l.endTime);
+    const totalCal = completedEntries.reduce((a, l) => a + (l.calories || 0), 0);
+    const totalFluid = completedEntries.reduce((a, l) => a + (l.fluidOz || 0), 0);
+    const totalSodium = completedEntries.reduce((a, l) => a + (l.sodiumMg || 0), 0);
+    const calPerHr = lapHours > 0 ? totalCal / lapHours : 0;
+    const fluidPerHr = lapHours > 0 ? totalFluid / lapHours : 0;
+    const sodiumPerHr = lapHours > 0 ? totalSodium / lapHours : 0;
 
     let status = 'notstarted';
     if (lapDurations.length > 0 && avgLap) {
-      const projected = avgLap * race.totalLoops;
+      const avgPitForProjection = avgPit != null ? avgPit : 0;
+      const projected = (avgLap + avgPitForProjection) * race.totalLoops;
       if (projected > race.totalCutoffHours * 3600) status = 'offpace';
       else if (projected > race.lastLapStartCutoffHours * 3600) status = 'tight';
       else status = 'onpace';
+    } else if (inProgressLap) {
+      status = 'onpace';
     }
 
-    const projectedFinish = avgLap ? avgLap * race.totalLoops : null;
+    const projectedFinish = avgLap ? (avgLap + (avgPit || 0)) * race.totalLoops : null;
 
     return {
       lapsDone: lapDurations.length,
       milesDone: lapDurations.length * race.loopDistance,
-      totalSeconds, avgLap, lastLap, paceSecPerMile,
+      raceSeconds, totalCourseSeconds, totalPitSeconds,
+      currentLapSeconds, currentPitSeconds,
+      avgLap, lastLap, avgPit, paceSecPerMile,
       totalCal, totalFluid, totalSodium,
       calPerHr, fluidPerHr, sodiumPerHr,
-      status, projectedFinish, lapDurations
+      status, projectedFinish,
+      lapDurations, pitDurations,
+      inPit, inProgressLap: !!inProgressLap
     };
   }
 
@@ -407,16 +455,27 @@
     }).join('');
 
     const lapRows = runner.laps.length === 0
-      ? `<tr class="empty"><td colspan="7" style="text-align:center; padding: 24px;">Awaiting first lap</td></tr>`
+      ? `<tr class="empty"><td colspan="8" style="text-align:center; padding: 24px;">Awaiting first lap</td></tr>`
       : runner.laps.map((l, i) => {
           const dur = (l.startTime && l.endTime)
             ? (new Date(l.endTime) - new Date(l.startTime)) / 1000 : null;
+          const next = runner.laps[i + 1];
+          let pitSec = null;
+          if (l.endTime && next && next.startTime) {
+            pitSec = (new Date(next.startTime) - new Date(l.endTime)) / 1000;
+          } else if (l.endTime && !next && c.inPit && i === runner.laps.length - 1) {
+            pitSec = c.currentPitSeconds;
+          }
+          const pitCell = pitSec != null
+            ? fmtDuration(pitSec).replace(/^00:/, '') + (next ? '' : ' <span style="color: var(--accent); font-size: 9px;">●</span>')
+            : '—';
           const noteParts = [l.gearChanges, l.meds, l.issues, l.notes].filter(Boolean);
           return `
             <tr>
               <td class="lap-num">${l.lap}</td>
               <td class="num">${fmtClockTime(l.endTime)}</td>
               <td class="num">${dur ? fmtDuration(dur).replace(/^00:/, '') : '—'}</td>
+              <td class="num">${pitCell}</td>
               <td class="num">${l.calories || 0}</td>
               <td class="num">${l.fluidOz || 0}oz</td>
               <td class="num">${l.sodiumMg || 0}</td>
@@ -438,13 +497,23 @@
         <div class="stats">
           <div class="stat">
             <span class="label">Laps</span>
-            <span class="value">${c.lapsDone}<span style="color: var(--text-muted); font-size: 16px;">/${race.totalLoops}</span></span>
-            <span class="sub">${c.milesDone} mi</span>
+            <span class="value">${c.lapsDone}<span style="color: var(--text-muted); font-size: 14px;">/${race.totalLoops}</span></span>
+            <span class="sub">${c.milesDone} mi done</span>
           </div>
           <div class="stat">
-            <span class="label">Cum Time</span>
-            <span class="value">${fmtDuration(c.totalSeconds)}</span>
+            <span class="label">Race Time</span>
+            <span class="value">${fmtDuration(c.raceSeconds)}</span>
             <span class="sub">of ${race.totalCutoffHours}:00:00</span>
+          </div>
+          <div class="stat${c.inProgressLap ? ' live' : ''}">
+            <span class="label">Course</span>
+            <span class="value">${fmtDuration(c.totalCourseSeconds)}</span>
+            <span class="sub">${c.inProgressLap ? 'on course' : 'running total'}</span>
+          </div>
+          <div class="stat${c.inPit ? ' live' : ''}">
+            <span class="label">Pit</span>
+            <span class="value">${fmtDuration(c.totalPitSeconds)}</span>
+            <span class="sub">${c.inPit ? 'in pit now' : (c.avgPit != null ? 'avg ' + fmtDuration(c.avgPit) : 'no pit yet')}</span>
           </div>
           <div class="stat">
             <span class="label">Avg Lap</span>
@@ -492,7 +561,7 @@
             <table>
               <thead>
                 <tr>
-                  <th>#</th><th>Done</th><th class="num">Lap</th>
+                  <th>#</th><th>Done</th><th class="num">Lap</th><th class="num">Pit</th>
                   <th class="num">Cal</th><th class="num">Fluid</th><th class="num">Na</th>
                   <th>Notes</th>
                 </tr>
