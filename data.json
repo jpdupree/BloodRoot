@@ -21,9 +21,10 @@
         {
           "lap": 1,
           "startTime": "2026-05-08T07:00:00-04:00",
-          "calories": 1000,
+          "endTime": "2026-05-08T13:30:57.975Z",
+          "calories": 800,
           "fluidOz": 30,
-          "sodiumMg": 1446,
+          "sodiumMg": 1356,
           "notes": "Bobo's strawberry, 2x Spring Energy gels, 900 mL Tailwind"
         }
       ]
@@ -40,9 +41,13 @@
           "fluidOz": 51,
           "sodiumMg": 1860,
           "notes": "3x Tailwind flasks"
+        },
+        {
+          "lap": 2,
+          "startTime": "2026-05-08T13:41:10.623Z"
         }
       ]
     }
   ],
-  "lastUpdated": "2026-05-08T13:45:00Z"
+  "lastUpdated": "2026-05-08T13:50:00Z"
 }
