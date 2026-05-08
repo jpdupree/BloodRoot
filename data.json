@@ -45,14 +45,14 @@
           "calories": 600,
           "fluidOz": 51,
           "sodiumMg": 1860,
-          "meds": "Missed — took at start of lap 2",
+          "gearChanges": "Ran without poles",
           "issues": "Mild hand swelling noted at pit-in",
           "notes": "3x Tailwind flasks"
         },
         {
           "lap": 2,
           "startTime": "2026-05-08T13:41:10.623Z",
-          "meds": "Took lap-1 + lap-2 pills at sign-out"
+          "gearChanges": "Picked up poles"
         }
       ]
     }
