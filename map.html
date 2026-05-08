@@ -263,6 +263,7 @@
         crossorigin=""></script>
 <script>
   const RUNNER_COLORS = { jasmine: '#ff6b3d', oppenheimer: '#5ec8ff' };
+  const RUNNER_LAT_OFFSETS = { jasmine: 0.00007, oppenheimer: -0.00007 };
   const REFRESH_MS = 15000;
 
   let gpxPoints = [];        // [{ lat, lon, ele, dist }]
@@ -444,15 +445,18 @@
     const initial = (runner.name || id)[0].toUpperCase();
     const onCourse = pos.state === 'course';
     const visible = onCourse;
+    const dLat = RUNNER_LAT_OFFSETS[id] || 0;
+    const lat = pos.point.lat + dLat;
+    const lon = pos.point.lon;
     if (!runnerMarkers[id]) {
       const icon = L.divIcon({
         className: 'runner-pin',
         html: `<div class="pin" style="color: ${color};"><span>${initial}</span></div>`,
         iconSize: [28, 28], iconAnchor: [14, 14]
       });
-      runnerMarkers[id] = L.marker([pos.point.lat, pos.point.lon], { icon, zIndexOffset: 800 }).addTo(map);
+      runnerMarkers[id] = L.marker([lat, lon], { icon, zIndexOffset: 800 }).addTo(map);
     }
-    runnerMarkers[id].setLatLng([pos.point.lat, pos.point.lon]);
+    runnerMarkers[id].setLatLng([lat, lon]);
     const tip = `${runner.name} · ${pos.detail}`;
     if (runnerMarkers[id]._tooltip) runnerMarkers[id].setTooltipContent(tip);
     else runnerMarkers[id].bindTooltip(tip, { direction: 'top', offset: [0, -14] });
