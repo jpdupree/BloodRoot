@@ -73,10 +73,11 @@
         {
           "lap": 3,
           "startTime": "2026-05-08T16:35:35.151Z",
-          "gearChanges": "Switched shoes Lone Peak → Timp"
+          "gearChanges": "Switched shoes Lone Peak → Timp",
+          "endTime": "2026-05-08T19:15:26.095Z"
         }
       ]
     }
   ],
-  "lastUpdated": "2026-05-08T19:15:25.652Z"
+  "lastUpdated": "2026-05-08T19:15:27.264Z"
 }
