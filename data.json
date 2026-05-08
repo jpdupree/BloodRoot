@@ -54,9 +54,13 @@
           "lap": 2,
           "startTime": "2026-05-08T13:41:10.623Z",
           "gearChanges": "Picked up poles"
+        },
+        {
+          "lap": 3,
+          "startTime": "2026-05-08T16:35:35.151Z"
         }
       ]
     }
   ],
-  "lastUpdated": "2026-05-08T16:19:52.791Z"
+  "lastUpdated": "2026-05-08T16:35:35.404Z"
 }
