@@ -68,9 +68,9 @@
 **Pit 3: 3:15:26 → 3:32:15 PM (16:49)**
 
 ### Lap 4 · 3:32:15 → 6:24:40 PM (2:52:25)
-- **Intake:** 1,110 cal · 62 oz · 3,170 mg sodium
+- **Intake:** 1,190 cal · 62 oz · 3,200 mg sodium
 - **On lap:** 3× flasks Tailwind, 1 Huma gel, 1 Better Goods mixed-berry fruit strip
-- **Pit 4:** Maruchan cup ramen, 200 mL Coke
+- **Pit 4:** Maruchan cup ramen, 200 mL Coke, handful of Gushers
 - **Meds:** 4× ibuprofen
 
 **Pit 4: 6:24:40 → 6:51:22 PM (26:42)**
@@ -85,6 +85,6 @@
 | | Cum. cal | Cum. fluid | Cum. sodium | Total time |
 |---|---:|---:|---:|---:|
 | Jasmine | 4,290 | 184 oz | 8,806 mg | 11:51 |
-| Oppenheimer | 3,500 | 211 oz | 8,600 mg | 11:51 |
+| Oppenheimer | 3,580 | 211 oz | 8,630 mg | 11:51 |
 
 **Race-clock at start of lap 5:** 11h 51m of 38h cutoff used; 35h-to-start-lap-10 gate gives them ~23h to complete 5 more laps. Average lap+pit so far: ~2:58. They're ~8.5h ahead of the total cutoff.
