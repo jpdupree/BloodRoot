@@ -49,11 +49,17 @@
         {
           "lap": 4,
           "startTime": "2026-05-08T19:32:15.208Z",
-          "endTime": "2026-05-08T22:24:39.853Z"
+          "endTime": "2026-05-08T22:24:39.000Z",
+          "calories": 1110,
+          "fluidOz": 50,
+          "sodiumMg": 2850,
+          "meds": "3x ibuprofen",
+          "notes": "On lap: 2x flasks + 150 mL Tailwind, 1 Spring gel, 1 GoGo squeeZ applesauce, 1 Ketone-IQ shot. Pit 4: Maruchan cup ramen, 200 mL ginger ale. Body care: re-lubed toes, fresh socks"
         },
         {
           "lap": 5,
-          "startTime": "2026-05-08T22:51:22.305Z"
+          "startTime": "2026-05-08T22:51:22.000Z",
+          "gearChanges": "Added headlamp (dusk); fresh socks"
         }
       ]
     },
@@ -96,14 +102,20 @@
         {
           "lap": 4,
           "startTime": "2026-05-08T19:32:15.745Z",
-          "endTime": "2026-05-08T22:24:40.235Z"
+          "endTime": "2026-05-08T22:24:40.000Z",
+          "calories": 1110,
+          "fluidOz": 62,
+          "sodiumMg": 3170,
+          "meds": "4x ibuprofen",
+          "notes": "On lap: 3x flasks Tailwind, 1 Huma gel, 1 Better Goods mixed-berry fruit strip. Pit 4: Maruchan cup ramen, 200 mL Coke"
         },
         {
           "lap": 5,
-          "startTime": "2026-05-08T22:51:22.800Z"
+          "startTime": "2026-05-08T22:51:22.000Z",
+          "gearChanges": "Added headlamp (dusk)"
         }
       ]
     }
   ],
-  "lastUpdated": "2026-05-08T22:51:23.725Z"
+  "lastUpdated": "2026-05-08T22:55:00Z"
 }
