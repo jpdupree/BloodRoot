@@ -40,7 +40,11 @@
         {
           "lap": 3,
           "startTime": "2026-05-08T16:35:34.751Z",
-          "endTime": "2026-05-08T19:15:30.568Z"
+          "endTime": "2026-05-08T19:15:30.568Z",
+          "calories": 1080,
+          "fluidOz": 48,
+          "sodiumMg": 1750,
+          "notes": "On lap: 1200 mL Tailwind, 2x Spring gels, 1x Spring Energy XL Peach Cobbler. Pit 3: 200 mL Coke, ~5 sweetened dried mangoes"
         },
         {
           "lap": 4,
@@ -78,7 +82,11 @@
           "lap": 3,
           "startTime": "2026-05-08T16:35:35.151Z",
           "gearChanges": "Switched shoes Lone Peak → Timp",
-          "endTime": "2026-05-08T19:15:26.095Z"
+          "endTime": "2026-05-08T19:15:26.095Z",
+          "calories": 820,
+          "fluidOz": 49,
+          "sodiumMg": 1680,
+          "notes": "On lap: 1250 mL Tailwind, Huma gel. Pit 3: 200 mL Coke, ~5 sweetened dried mangoes"
         },
         {
           "lap": 4,
@@ -87,5 +95,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-08T19:32:16.740Z"
+  "lastUpdated": "2026-05-08T19:50:00Z"
 }
