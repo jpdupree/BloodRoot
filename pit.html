@@ -568,6 +568,19 @@
     if (!store[runnerId]) store[runnerId] = { events: [] };
     store[runnerId].events.push(ev);
     saveStore(store);
+    if (raceData) {
+      const runner = (raceData.runners || []).find(r => r.id === runnerId);
+      if (runner) {
+        if (!runner.laps) runner.laps = [];
+        let lapEntry = runner.laps.find(l => l.lap === lap);
+        if (!lapEntry) {
+          lapEntry = { lap };
+          runner.laps.push(lapEntry);
+          runner.laps.sort((a, b) => a.lap - b.lap);
+        }
+        lapEntry[action === 'out' ? 'startTime' : 'endTime'] = ev.ts;
+      }
+    }
     render();
     if (ev.syncStatus === 'syncing') {
       await syncEvent(runnerId, ev.id);
