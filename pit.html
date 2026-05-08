@@ -328,6 +328,7 @@
   ];
   const STORAGE_KEY = 'pit-board-events-v1';
   const CONFIG_KEY = 'pit-board-config-v1';
+  let raceData = null;
 
   function loadStore() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
@@ -342,6 +343,41 @@
   function saveConfig(c) { localStorage.setItem(CONFIG_KEY, JSON.stringify(c)); }
   function clearConfig() { localStorage.removeItem(CONFIG_KEY); }
   function hasToken() { const c = loadConfig(); return !!(c && c.token && c.owner && c.repo && c.branch && c.path); }
+
+  async function loadRaceData() {
+    try {
+      const res = await fetch('data.json?_=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) return false;
+      raceData = await res.json();
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function deriveStateFromLaps(laps) {
+    if (!laps || laps.length === 0) {
+      return { currentState: 'idle', currentLap: 0, nextAction: 'out', nextLap: 1, lastTs: null };
+    }
+    let bestTs = null, bestAction = null, bestLap = null;
+    for (const l of laps) {
+      if (l.startTime && (!bestTs || new Date(l.startTime) > new Date(bestTs))) {
+        bestTs = l.startTime; bestAction = 'out'; bestLap = l.lap;
+      }
+      if (l.endTime && (!bestTs || new Date(l.endTime) > new Date(bestTs))) {
+        bestTs = l.endTime; bestAction = 'in'; bestLap = l.lap;
+      }
+    }
+    if (!bestTs) return { currentState: 'idle', currentLap: 0, nextAction: 'out', nextLap: 1, lastTs: null };
+    if (bestAction === 'out') {
+      return { currentState: 'on-course', currentLap: bestLap, nextAction: 'in', nextLap: bestLap, lastTs: bestTs };
+    }
+    return { currentState: 'in-pit', currentLap: bestLap, nextAction: 'out', nextLap: bestLap + 1, lastTs: bestTs };
+  }
+
+  function getRunnerStateRemote(runnerId) {
+    if (!raceData) return null;
+    const runner = (raceData.runners || []).find(r => r.id === runnerId);
+    return deriveStateFromLaps((runner && runner.laps) || []);
+  }
 
   async function syncFromDataJson() {
     try {
@@ -515,12 +551,12 @@
     return { events, lastAction: last.action, currentLap: outCount, lastTs: last.ts };
   }
 
-  function press(runnerId, action) {
-    const store = loadStore();
-    if (!store[runnerId]) store[runnerId] = { events: [] };
-    const events = store[runnerId].events;
-    const outCount = events.filter(e => e.action === 'out').length;
-    const lap = action === 'out' ? outCount + 1 : outCount;
+  async function press(runnerId) {
+    await loadRaceData();
+    const remote = getRunnerStateRemote(runnerId);
+    if (!remote) { alert('Could not load race data — check connection and try again.'); return; }
+    const action = remote.nextAction;
+    const lap = remote.nextLap;
     const now = new Date();
     const ev = {
       id: now.getTime() + '-' + Math.random().toString(36).slice(2, 6),
@@ -528,10 +564,16 @@
       action, lap, sent: false,
       syncStatus: hasToken() ? 'syncing' : 'queued'
     };
-    events.push(ev);
+    const store = loadStore();
+    if (!store[runnerId]) store[runnerId] = { events: [] };
+    store[runnerId].events.push(ev);
     saveStore(store);
     render();
-    if (ev.syncStatus === 'syncing') syncEvent(runnerId, ev.id);
+    if (ev.syncStatus === 'syncing') {
+      await syncEvent(runnerId, ev.id);
+      await loadRaceData();
+      render();
+    }
   }
 
   function deleteEvent(runnerId, eventId) {
@@ -687,23 +729,38 @@
   }
 
   function renderRunner(runner) {
-    const s = getRunnerState(runner.id);
-    const onCourse = s.lastAction === 'out';
-    const inPit = s.lastAction === 'in';
-    const stateLabel = onCourse ? 'On Course' : (inPit ? 'In Pit' : 'Not Started');
-    const stateClass = onCourse ? 'course' : (inPit ? 'pit' : 'idle');
+    const remote = getRunnerStateRemote(runner.id);
+    const localEvents = getRunnerEvents(runner.id);
 
-    let buttonLabel, buttonAction;
-    if (onCourse) {
-      buttonLabel = `Sign In · End Lap ${s.currentLap}`;
-      buttonAction = 'in';
-    } else {
-      const nextLap = (inPit ? s.currentLap : 0) + 1;
-      buttonLabel = `Sign Out · Start Lap ${nextLap}`;
-      buttonAction = 'out';
+    let onCourse = false, inPit = false, idle = true;
+    let stateLabel = 'Loading…', stateClass = 'idle';
+    let buttonLabel = 'Loading…', buttonAction = '', buttonDisabled = true;
+    let lastTs = null, timerLabel = 'Time in current state';
+
+    if (remote) {
+      buttonDisabled = false;
+      if (remote.currentState === 'on-course') {
+        onCourse = true; idle = false;
+        stateLabel = 'On Course'; stateClass = 'course';
+        buttonLabel = `Sign In · End Lap ${remote.nextLap}`;
+        buttonAction = 'in';
+        lastTs = remote.lastTs;
+        timerLabel = 'On course for';
+      } else if (remote.currentState === 'in-pit') {
+        inPit = true; idle = false;
+        stateLabel = 'In Pit'; stateClass = 'pit';
+        buttonLabel = `Sign Out · Start Lap ${remote.nextLap}`;
+        buttonAction = 'out';
+        lastTs = remote.lastTs;
+        timerLabel = 'In pit for';
+      } else {
+        stateLabel = 'Not Started'; stateClass = 'idle';
+        buttonLabel = `Sign Out · Start Lap ${remote.nextLap}`;
+        buttonAction = 'out';
+      }
     }
 
-    const recent = s.events.slice(-2).reverse();
+    const recent = localEvents.slice(-2).reverse();
     const statusBadge = (e) => {
       const st = e.syncStatus || (e.sent ? 'synced' : 'queued');
       if (st === 'syncing') return '<span class="event-status syncing">sync…</span>';
@@ -727,11 +784,11 @@
           <div class="runner-name">${runner.name}</div>
           <div class="state-badge state-${stateClass}">${stateLabel}</div>
         </div>
-        <div class="state-timer" data-since="${s.lastTs || ''}">
-          <span class="label">${onCourse ? 'On course for' : (inPit ? 'In pit for' : 'Time in current state')}</span>
+        <div class="state-timer" data-since="${lastTs || ''}">
+          <span class="label">${timerLabel}</span>
           <span class="value runner-timer">—</span>
         </div>
-        <button class="big-btn ${buttonAction}" data-action="press" data-runner="${runner.id}" data-press="${buttonAction}">
+        <button class="big-btn ${buttonAction}" data-action="press" data-runner="${runner.id}"${buttonDisabled ? ' disabled' : ''}>
           ${buttonLabel}
         </button>
         <div class="event-list">
@@ -787,7 +844,7 @@
     const t = e.target.closest('[data-action]');
     if (!t) return;
     const action = t.dataset.action;
-    if (action === 'press') press(t.dataset.runner, t.dataset.press);
+    if (action === 'press') press(t.dataset.runner);
     else if (action === 'edit') editEventTime(t.dataset.runner, t.dataset.event);
     else if (action === 'del') deleteEvent(t.dataset.runner, t.dataset.event);
     else if (action === 'resync') syncEvent(t.dataset.runner, t.dataset.event);
@@ -812,7 +869,12 @@
   if (!hasToken()) openConfigForm();
 
   render();
-  syncFromDataJson().then((ok) => { if (ok) render(); });
+  (async () => {
+    await loadRaceData();
+    await syncFromDataJson();
+    render();
+  })();
+  setInterval(async () => { await loadRaceData(); render(); }, 15000);
   setInterval(tick, 1000);
 </script>
 
