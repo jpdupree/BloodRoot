@@ -343,6 +343,41 @@
   function clearConfig() { localStorage.removeItem(CONFIG_KEY); }
   function hasToken() { const c = loadConfig(); return !!(c && c.token && c.owner && c.repo && c.branch && c.path); }
 
+  async function syncFromDataJson() {
+    try {
+      const res = await fetch('data.json?_=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) return false;
+      const data = await res.json();
+      const store = loadStore();
+      let changed = false;
+      for (const r of RUNNERS) {
+        if (!store[r.id]) store[r.id] = { events: [] };
+        const events = store[r.id].events;
+        const remoteRunner = (data.runners || []).find(x => x.id === r.id);
+        const remoteLaps = (remoteRunner && remoteRunner.laps) || [];
+        for (const lap of remoteLaps) {
+          if (lap.startTime) {
+            const id = `seed-${r.id}-${lap.lap}-out`;
+            if (!events.some(e => e.id === id)) {
+              events.push({ id, ts: lap.startTime, action: 'out', lap: lap.lap, sent: true, syncStatus: 'synced' });
+              changed = true;
+            }
+          }
+          if (lap.endTime) {
+            const id = `seed-${r.id}-${lap.lap}-in`;
+            if (!events.some(e => e.id === id)) {
+              events.push({ id, ts: lap.endTime, action: 'in', lap: lap.lap, sent: true, syncStatus: 'synced' });
+              changed = true;
+            }
+          }
+        }
+        events.sort((a, b) => new Date(a.ts) - new Date(b.ts));
+      }
+      if (changed) saveStore(store);
+      return true;
+    } catch (e) { return false; }
+  }
+
   function detectDefaults() {
     const host = location.hostname;
     let owner = 'jpdupree', repo = 'BloodRoot';
@@ -777,6 +812,7 @@
   if (!hasToken()) openConfigForm();
 
   render();
+  syncFromDataJson().then((ok) => { if (ok) render(); });
   setInterval(tick, 1000);
 </script>
 
