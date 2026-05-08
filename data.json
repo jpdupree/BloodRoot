@@ -45,14 +45,17 @@
           "calories": 600,
           "fluidOz": 51,
           "sodiumMg": 1860,
+          "meds": "Missed — took at start of lap 2",
+          "issues": "Mild hand swelling noted at pit-in",
           "notes": "3x Tailwind flasks"
         },
         {
           "lap": 2,
-          "startTime": "2026-05-08T13:41:10.623Z"
+          "startTime": "2026-05-08T13:41:10.623Z",
+          "meds": "Took lap-1 + lap-2 pills at sign-out"
         }
       ]
     }
   ],
-  "lastUpdated": "2026-05-08T13:55:00Z"
+  "lastUpdated": "2026-05-08T14:00:00Z"
 }
