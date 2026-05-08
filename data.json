@@ -103,11 +103,11 @@
           "lap": 4,
           "startTime": "2026-05-08T19:32:15.745Z",
           "endTime": "2026-05-08T22:24:40.000Z",
-          "calories": 1110,
+          "calories": 1190,
           "fluidOz": 62,
-          "sodiumMg": 3170,
+          "sodiumMg": 3200,
           "meds": "4x ibuprofen",
-          "notes": "On lap: 3x flasks Tailwind, 1 Huma gel, 1 Better Goods mixed-berry fruit strip. Pit 4: Maruchan cup ramen, 200 mL Coke"
+          "notes": "On lap: 3x flasks Tailwind, 1 Huma gel, 1 Better Goods mixed-berry fruit strip. Pit 4: Maruchan cup ramen, 200 mL Coke, handful of Gushers"
         },
         {
           "lap": 5,
@@ -117,5 +117,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-08T22:55:00Z"
+  "lastUpdated": "2026-05-08T23:10:00Z"
 }
