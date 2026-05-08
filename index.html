@@ -231,6 +231,18 @@
   }
 
   .laplog { border-top: 1px solid var(--border); margin-top: 8px; }
+  .laplog-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 2px 6px;
+    cursor: pointer; user-select: none;
+  }
+  .laplog-head:hover .laplog-head-toggle { color: var(--accent); }
+  .laplog-head-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; }
+  .laplog-head-toggle { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); }
+  .laplog-head-toggle::before { content: '▼ '; }
+  .laplog.collapsed .laplog-head-toggle::before { content: '▶ '; }
+  .laplog.collapsed tr.lap-old, .laplog.collapsed tr.note-old { display: none; }
+  .laplog.collapsed .when-expanded, .laplog:not(.collapsed) .when-collapsed { display: none; }
   .laplog table { width: 100%; border-collapse: collapse; font-size: 12px; }
   .laplog th {
     font-family: 'JetBrains Mono', monospace; font-size: 9px;
@@ -517,11 +529,14 @@
             ? fmtDuration(pitSec).replace(/^00:/, '') + (next ? '' : ' <span style="color: var(--accent); font-size: 9px;">●</span>')
             : '—';
           const noteParts = [l.gearChanges, l.meds, l.issues, l.notes].filter(Boolean);
+          const isOld = (runner.laps.length - 1 - i) >= 2;
+          const oldCls = isOld ? ' lap-old' : '';
+          const noteOldCls = isOld ? ' note-old' : '';
           const noteRow = noteParts.length
-            ? `<tr class="note-row"><td colspan="7">${noteParts.join(' · ')}</td></tr>`
+            ? `<tr class="note-row${noteOldCls}"><td colspan="7">${noteParts.join(' · ')}</td></tr>`
             : '';
           return `
-            <tr class="lap-row">
+            <tr class="lap-row${oldCls}">
               <td class="lap-num">${l.lap}</td>
               <td class="num">${fmtClockTime(l.endTime)}</td>
               <td class="num">${dur ? fmtDuration(dur).replace(/^00:/, '') : '—'}</td>
@@ -634,7 +649,16 @@
             </span>
           </div>
           <div class="laps-grid">${lapCells}</div>
-          <div class="laplog">
+          <div class="laplog ${laplogCollapsed(runner.id, (runner.laps || []).length) ? 'collapsed' : ''}" data-runner="${runner.id}">
+            ${(runner.laps || []).length > 2 ? `
+              <div class="laplog-head" data-action="toggle-laplog" data-runner="${runner.id}">
+                <span class="laplog-head-title">Lap Log</span>
+                <span class="laplog-head-toggle">
+                  <span class="when-collapsed">Show all ${runner.laps.length}</span>
+                  <span class="when-expanded">Show recent 2</span>
+                </span>
+              </div>
+            ` : ''}
             <table>
               <thead>
                 <tr>
@@ -707,6 +731,33 @@
     }
     document.getElementById('last-updated').textContent = lu + live;
   }
+
+  const LAPLOG_KEY = 'dashboard-laplog-collapsed-v1';
+  function loadLaplogState() {
+    try { return JSON.parse(localStorage.getItem(LAPLOG_KEY) || '{}'); }
+    catch (e) { return {}; }
+  }
+  function saveLaplogState(s) {
+    try { localStorage.setItem(LAPLOG_KEY, JSON.stringify(s)); } catch (e) {}
+  }
+  function laplogCollapsed(runnerId, lapCount) {
+    if (lapCount <= 2) return false;
+    const s = loadLaplogState();
+    return s[runnerId] !== false;
+  }
+
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('[data-action="toggle-laplog"]');
+    if (!t) return;
+    const id = t.dataset.runner;
+    const log = t.closest('.laplog');
+    if (!log) return;
+    const nowCollapsed = !log.classList.contains('collapsed');
+    log.classList.toggle('collapsed', nowCollapsed);
+    const s = loadLaplogState();
+    s[id] = nowCollapsed;
+    saveLaplogState(s);
+  });
 
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') load();
