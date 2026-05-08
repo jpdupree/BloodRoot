@@ -14,3 +14,11 @@
 # Updating data.json during the race
 
 Crew chief sends lap details in chat. Find the matching lap entry by runner + lap number (the pit page may have already created it with a `startTime` and/or `endTime`) and fill in the rest. Update `lastUpdated` to now. Commit with a short, descriptive message and push to `main`.
+
+# Fueling shorthand
+
+Convert these to `calories`, `fluidOz`, `sodiumMg` when the crew chief uses them:
+
+- **1 flask of Tailwind** = 17 oz fluid + 200 cal + 620 mg sodium (500 ml)
+
+Multiply through for "2 flasks", "1.5 flasks", etc. Add to whatever they ate/drank on top.
