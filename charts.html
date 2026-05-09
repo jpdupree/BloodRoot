@@ -362,8 +362,10 @@
       const lastEnd = completedLaps[completedLaps.length - 1].endTime;
       const elapsedAtLastEnd = (new Date(lastEnd) - startMs) / 1000;
       const lapsRemaining = raceData.race.totalLoops - completed.length;
-      // Note: this slightly overcounts (final lap has no following pit) — acknowledge in label
-      const projectedFinishSec = elapsedAtLastEnd + lapsRemaining * cycle - pitAvg;
+      // From end-of-lap-N to race finish: (totalLoops - N) laps + (totalLoops - N) pits
+      // (pit N through pit totalLoops-1; no pit after the final lap, but that's already
+      // excluded from the count).
+      const projectedFinishSec = elapsedAtLastEnd + lapsRemaining * cycle;
       const buffer = cutoffSec - projectedFinishSec;
       const bufColor = buffer >= 0 ? 'var(--green)' : 'var(--red)';
       const bufStr = buffer >= 0 ? `+${fmtClock(buffer)} buffer` : `<span style="color:var(--red)">OVER by ${fmtClock(-buffer)}</span>`;
