@@ -465,9 +465,9 @@
 
   function lapClass(durationSec) {
     if (durationSec == null) return '';
-    if (durationSec < 3.3 * 3600) return 'done';
-    if (durationSec < 3.8 * 3600) return 'slow';
-    return 'danger';
+    if (durationSec < 3.83 * 3600) return 'done';   // < 3:50 — fine given banked buffer
+    if (durationSec < 4.17 * 3600) return 'slow';   // 3:50 - 4:10 — eating into buffer
+    return 'danger';                                // > 4:10 — over with no margin
   }
 
   function intakeClass(actual, target) {
