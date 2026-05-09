@@ -264,6 +264,9 @@
 <script>
   const RUNNER_COLORS = { jasmine: '#ff6b3d', oppenheimer: '#5ec8ff' };
   const RUNNER_LAT_OFFSETS = { jasmine: 0.00007, oppenheimer: -0.00007 };
+  // When a runner is sticking with another, mirror the target's computed position
+  // (own color/marker preserved). Set to null/empty to compute solo.
+  const RUNNER_FOLLOWS = { oppenheimer: 'jasmine' };
   const REFRESH_MS = 15000;
 
   let gpxPoints = [];        // [{ lat, lon, ele, dist }]
@@ -419,6 +422,14 @@
   }
 
   function computeRunnerPosition(runner, race) {
+    const followsId = RUNNER_FOLLOWS[runner.id];
+    if (followsId) {
+      const target = (raceData.runners || []).find(r => r.id === followsId);
+      if (target && !RUNNER_FOLLOWS[target.id]) {
+        const mirrored = computeRunnerPosition(target, race);
+        return { ...mirrored, detail: `${mirrored.detail} · with ${target.name}` };
+      }
+    }
     const s = runnerLapState(runner, race);
     if (s.finished) return { state: 'done', lap: race.totalLoops, fraction: 1, point: gpxPoints[0], detail: 'Finished' };
     if (s.inProgressLap) {
