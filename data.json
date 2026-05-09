@@ -92,6 +92,10 @@
           "startTime": "2026-05-09T09:58:37.000Z",
           "gearChanges": "Headlamp put away (daylight)",
           "endTime": "2026-05-09T13:37:00.000Z"
+        },
+        {
+          "lap": 9,
+          "startTime": "2026-05-09T14:05:13.016Z"
         }
       ]
     },
@@ -180,5 +184,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-09T13:38:00Z"
+  "lastUpdated": "2026-05-09T14:05:13.419Z"
 }
