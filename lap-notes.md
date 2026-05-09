@@ -36,8 +36,16 @@
 
 **Pit 4: 6:24:39 → 6:51:22 PM (26:43)**
 
-### Lap 5 · started 6:51:22 PM (in progress)
-- **Gear:** Added headlamp (dusk); fresh socks
+### Lap 5 · 6:51:22 → 9:53:18 PM (3:01:56) · headlamps on
+- **Intake:** 1,360 cal · 48 oz · 2,910 mg sodium
+- **On lap:** 1,100 mL Tailwind, 1 Spring gel, Bobo's
+- **Pit 5:** Maruchan cup ramen, 200 mL Coke, Little Debbie oatmeal cream pie
+- **Issues:** Stepped in water puddle on course; hotspot on big toe at pit-in
+- **Body care:** Bandaged big toe hotspot, fresh socks
+
+**Pit 5: 9:53:18 → 10:17:06 PM (23:48)**
+
+### Lap 6 · started 10:17:06 PM (in progress)
 
 ---
 
@@ -75,16 +83,24 @@
 
 **Pit 4: 6:24:40 → 6:51:22 PM (26:42)**
 
-### Lap 5 · started 6:51:22 PM (in progress)
-- **Gear:** Added headlamp (dusk)
+### Lap 5 · 6:51:22 → 9:53:50 PM (3:02:28) · headlamps on
+- **Intake:** 1,240 cal · 62 oz · 3,330 mg sodium
+- **On lap:** 3× flasks Tailwind, 1 Huma gel
+- **Pit 5:** Maruchan cup ramen, 200 mL Coke, Little Debbie oatmeal cream pie
+
+**Pit 5: 9:53:50 → 10:17:02 PM (23:12)**
+
+### Lap 6 · started 10:17:02 PM (in progress)
 
 ---
 
-## Cumulative Through Lap 4 (40 mi)
+## Cumulative Through Lap 5 (50 mi)
 
 | | Cum. cal | Cum. fluid | Cum. sodium | Total time |
 |---|---:|---:|---:|---:|
-| Jasmine | 4,370 | 196 oz | 8,966 mg | 11:51 |
-| Oppenheimer | 3,580 | 211 oz | 8,630 mg | 11:51 |
+| Jasmine | 5,730 | 244 oz | 11,876 mg | 15:17 |
+| Oppenheimer | 4,820 | 273 oz | 11,960 mg | 15:17 |
 
-**Race-clock at start of lap 5:** 11h 51m of 38h cutoff used; 35h-to-start-lap-10 gate gives them ~23h to complete 5 more laps. Average lap+pit so far: ~2:58. They're ~8.5h ahead of the total cutoff.
+**Halfway report:** 50 mi done in 15h 17m. Average lap+pit so far: ~3:03. At this pace, projected finish ~30:34. They have ~7.5h of buffer to the 38h cutoff and ~19.5h to complete the remaining 5 laps before the 35h start-of-lap-10 gate.
+
+**Lap 5 was the first night lap** — both ran ~9 minutes slower than lap 4, which is expected with headlamps on technical terrain. Pit 5 also ran longer (~24 min vs ~17 min normal) for ramen prep and Jasmine's sock change.
