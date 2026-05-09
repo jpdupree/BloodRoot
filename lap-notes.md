@@ -53,7 +53,16 @@
 
 **Pit 6: 1:48:42 → 2:08:15 AM (19:33)**
 
-### Lap 7 · started 2:08:15 AM (in progress)
+### Lap 7 · 2:08:15 → 5:35:25 AM (3:27:10) · overnight
+- **Intake:** 660 cal · 46 oz · 1,550 mg sodium
+- **On lap:** 2 flasks Tailwind, 0.5 flask water, 1 Ketone-IQ shot
+- **Pit 7:** 1 Quaker apples & cinnamon oatmeal, 100 mL coffee
+- **Meds:** 3-4× ibuprofen (in pit)
+
+**Pit 7: 5:35:25 → 5:58:37 AM (23:12)**
+
+### Lap 8 · started 5:58:37 AM (in progress) · daylight
+- **Gear:** Headlamp put away
 
 ---
 
@@ -106,15 +115,28 @@
 
 **Pit 6: 1:48:44 → 2:08:15 AM (19:31)**
 
-### Lap 7 · started 2:08:15 AM (in progress)
+### Lap 7 · 2:08:15 → 5:35:24 AM (3:27:09) · overnight
+- **Intake:** 635 cal · 41 oz · 1,505 mg sodium
+- **On lap:** 2 flasks Tailwind, 1 Huma gel
+- **Pit 7:** 1 Quaker apples & cinnamon oatmeal, 200 mL coffee
+- **Meds:** 3-4× ibuprofen (in pit)
+
+**Pit 7: 5:35:24 → 5:58:37 AM (23:13)**
+
+### Lap 8 · started 5:58:37 AM (in progress) · daylight
+- **Gear:** Headlamp put away
 
 ---
 
-## Cumulative Through Lap 6 (60 mi)
+## Cumulative Through Lap 7 (70 mi)
 
 | | Cum. cal | Cum. fluid | Cum. sodium | Total time |
 |---|---:|---:|---:|---:|
-| Jasmine | 5,450 | 295 oz | 10,546 mg | 19:08 |
-| Oppenheimer | 5,580 | 322 oz | 13,660 mg | 19:08 |
+| Jasmine | 6,110 | 341 oz | 12,096 mg | 22:35 |
+| Oppenheimer | 6,215 | 363 oz | 15,165 mg | 22:35 |
 
-**60-mile checkpoint:** 19h 8m elapsed. Lap 6 came in at 3:32 (29 min slower than lap 5) — deepest fatigue lap so far, classic 1-3 AM trough. Average lap+pit cycle now ~3:11, projected finish ~32:44, **~5h 16m of cutoff buffer remaining**. The 35h start-of-lap-10 gate would arrive after ~13 more hours, vs ~10 hours of running for 4 more lap+pit cycles at current pace — still safe but margins are tighter than they were at halfway.
+**70-mile checkpoint:** 22h 35m elapsed at start of lap 8. Lap 7 came in at 3:27 — 4 minutes faster than lap 6 (3:31). They're holding pace, not still falling. Pit 7 was 23 min, slightly faster than pit 6. Sunrise + caffeine combo working as intended.
+
+**Cumulative ibuprofen totals:** Jasmine 10-11 doses (3 + 4 + 3-4); Oppenheimer 11-12 doses (4 + 4 + 3-4). Both are well into the "watch hard" zone for NSAID-related kidney stress. No more should go in unless something acute happens.
+
+**Buffer math:** at the recent-2-lap+pit cycle of ~3:50, four cycles puts the projected finish at ~38:05 — essentially right at the 38h cutoff. They need lap 8 to come in faster than the night laps (daylight should help) to bank back any meaningful buffer.
