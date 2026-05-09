@@ -115,7 +115,8 @@
           "gearChanges": "Final lap — rain stopped, cloudy, no shoe/sock change (feet feeling good)",
           "notes": "Rain picked back up ~1 hour in, stopped around mile 5-6. Back-half dry",
           "miles": 8,
-          "milesAt": "2026-05-09T21:38:00Z"
+          "milesAt": "2026-05-09T21:38:00Z",
+          "endTime": "2026-05-09T22:23:16.723Z"
         }
       ]
     },
@@ -228,5 +229,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-09T22:23:16.288Z"
+  "lastUpdated": "2026-05-09T22:23:17.707Z"
 }
