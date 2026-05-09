@@ -424,12 +424,18 @@
     if (s.inProgressLap) {
       const elapsed = Math.max(0, (Date.now() - new Date(s.inProgressLap.startTime).getTime()) / 1000);
       const lapEstimate = s.recentAvgLap || s.avgLap || 2.75 * 3600;
-      const fraction = Math.min(0.99, elapsed / lapEstimate);
+      const manualMiles = typeof s.inProgressLap.miles === 'number' ? s.inProgressLap.miles : null;
+      const fraction = manualMiles != null && race.loopDistance > 0
+        ? Math.min(0.99, manualMiles / race.loopDistance)
+        : Math.min(0.99, elapsed / lapEstimate);
       const distM = fraction * totalDistance;
       const point = pointAtDistance(distM);
+      const milesLabel = manualMiles != null
+        ? `${manualMiles.toFixed(1)} mi (spotted)`
+        : `~${metersToMiles(distM).toFixed(1)} mi`;
       return {
         state: 'course', lap: s.inProgressLap.lap, fraction, elapsed, point,
-        detail: `Lap ${s.inProgressLap.lap} · ~${metersToMiles(distM).toFixed(1)} mi · ${fmtDuration(elapsed)}`
+        detail: `Lap ${s.inProgressLap.lap} · ${milesLabel} · ${fmtDuration(elapsed)}`
       };
     }
     if (s.inPit) {
