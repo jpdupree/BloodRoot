@@ -102,12 +102,17 @@
           "lap": 9,
           "startTime": "2026-05-09T14:05:13.000Z",
           "gearChanges": "Carrying rain jacket",
-          "notes": "Sprinkles started ~11:00 AM EDT mid-lap, picked up to steady rain for the back half of the lap",
-          "endTime": "2026-05-09T17:53:34.057Z"
+          "endTime": "2026-05-09T17:53:34.000Z",
+          "calories": 1395,
+          "fluidOz": 41,
+          "sodiumMg": 2600,
+          "meds": "4x ibuprofen (pit 9 — peeing clear, hydration good)",
+          "notes": "On lap: 2 flasks + 150 mL Tailwind, 1 GoGo squeeZ applesauce, 1 Ketone-IQ shot, half Kate's Real Food bar (dark chocolate cherry & almond). Pit 9: Idahoan buttery mashed potatoes cup, Uncrustable, 5-Hour Energy. Sprinkles → steady rain for back half of lap; rain stopped at pit-in"
         },
         {
           "lap": 10,
-          "startTime": "2026-05-09T18:29:34.515Z"
+          "startTime": "2026-05-09T18:29:34.000Z",
+          "gearChanges": "Final lap — rain stopped, cloudy, no shoe/sock change (feet feeling good)"
         }
       ]
     },
@@ -203,15 +208,20 @@
           "lap": 9,
           "startTime": "2026-05-09T14:05:13.000Z",
           "gearChanges": "Carrying rain jacket",
-          "notes": "Sprinkles started ~11:00 AM EDT mid-lap, picked up to steady rain for the back half of the lap",
-          "endTime": "2026-05-09T17:51:55.038Z"
+          "endTime": "2026-05-09T17:51:55.000Z",
+          "calories": 955,
+          "fluidOz": 63,
+          "sodiumMg": 2760,
+          "meds": "4x ibuprofen (pit 9 — peeing clear, hydration good)",
+          "notes": "On lap: 3x flasks Tailwind, 1 Huma gel. Pit 9: half cup of ramen, half Monster Energy, 5-Hour Energy. Sprinkles → steady rain for back half of lap; rain stopped at pit-in"
         },
         {
           "lap": 10,
-          "startTime": "2026-05-09T18:29:34.752Z"
+          "startTime": "2026-05-09T18:29:34.000Z",
+          "gearChanges": "Final lap — rain stopped, cloudy, no shoe/sock change (feet feeling good)"
         }
       ]
     }
   ],
-  "lastUpdated": "2026-05-09T18:29:39.247Z"
+  "lastUpdated": "2026-05-09T18:35:00Z"
 }
