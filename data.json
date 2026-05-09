@@ -31,41 +31,41 @@
           "lap": 2,
           "startTime": "2026-05-08T13:41:10.623Z",
           "endTime": "2026-05-08T16:19:52.332Z",
-          "calories": 1300,
+          "calories": 1110,
           "fluidOz": 56,
-          "sodiumMg": 2850,
+          "sodiumMg": 2230,
           "issues": "Twisted ankle mid-lap; planned to tape but said it felt good at pit-in",
-          "notes": "On lap: 1100 mL Tailwind (one flask spiked with LMNT), 2x Spring gels, Bobo's. Pit 2: 12 oz Celsius, Uncrustable, 200 mL Coke, handful of Gushers"
+          "notes": "On lap: 1 flask water + LMNT, 1 flask + 100 mL Tailwind, 2x Spring gels, Bobo's. Pit 2: 12 oz Celsius, Uncrustable, 200 mL Coke, handful of Gushers"
         },
         {
           "lap": 3,
           "startTime": "2026-05-08T16:35:34.751Z",
           "endTime": "2026-05-08T19:15:30.568Z",
-          "calories": 1080,
+          "calories": 880,
           "fluidOz": 48,
-          "sodiumMg": 1750,
-          "notes": "On lap: 1200 mL Tailwind, 2x Spring gels, 1x Spring Energy XL Peach Cobbler. Pit 3: 200 mL Coke, ~5 sweetened dried mangoes"
+          "sodiumMg": 1130,
+          "notes": "On lap: 1 flask water, 1 flask + 200 mL Tailwind, 2x Spring gels, 1x Spring Energy XL Peach Cobbler. Pit 3: 200 mL Coke, ~5 sweetened dried mangoes"
         },
         {
           "lap": 4,
           "startTime": "2026-05-08T19:32:15.208Z",
           "endTime": "2026-05-08T22:24:39.000Z",
-          "calories": 1190,
+          "calories": 990,
           "fluidOz": 62,
-          "sodiumMg": 3010,
+          "sodiumMg": 2390,
           "meds": "3x ibuprofen",
-          "notes": "On lap: 2x flasks + 150 mL Tailwind, 1 Spring gel, 1 GoGo squeeZ applesauce, 1 Ketone-IQ shot. Pit 4: Maruchan cup ramen, 200 mL ginger ale, 12 oz Gatorade lemon-lime. Body care: re-lubed toes, fresh socks"
+          "notes": "On lap: 1 flask water, 1 flask + 150 mL Tailwind, 1 Spring gel, 1 GoGo squeeZ applesauce, 1 Ketone-IQ shot. Pit 4: Maruchan cup ramen, 200 mL ginger ale, 12 oz Gatorade lemon-lime. Body care: re-lubed toes, fresh socks"
         },
         {
           "lap": 5,
           "startTime": "2026-05-08T22:51:22.000Z",
           "gearChanges": "Added headlamp (dusk); fresh socks",
           "endTime": "2026-05-09T01:53:18.000Z",
-          "calories": 1360,
+          "calories": 1160,
           "fluidOz": 48,
-          "sodiumMg": 2910,
+          "sodiumMg": 2290,
           "issues": "Stepped in water puddle on course; hotspot on big toe at pit-in",
-          "notes": "On lap: 1100 mL Tailwind, 1 Spring gel, Bobo's. Pit 5: Maruchan cup ramen, 200 mL Coke, Little Debbie oatmeal cream pie. Body care: bandaged big toe hotspot, fresh socks"
+          "notes": "On lap: 1 flask water, 1 flask + 100 mL Tailwind, 1 Spring gel, Bobo's. Pit 5: Maruchan cup ramen, 200 mL Coke, Little Debbie oatmeal cream pie. Body care: bandaged big toe hotspot, fresh socks"
         },
         {
           "lap": 6,
@@ -136,5 +136,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-09T02:25:00Z"
+  "lastUpdated": "2026-05-09T02:30:00Z"
 }
