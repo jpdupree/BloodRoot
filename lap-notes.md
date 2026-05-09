@@ -2,9 +2,11 @@
 
 10 × 10mi loops. Both runners started at 7:00 AM EDT.
 
+**Both finished. 100 miles, both runners, in 35h 23m. Cutoff was 38h.**
+
 ---
 
-## Jasmine · #1
+## Jasmine · #1 · finished 6:23:16 PM (D2) · 35:23:16
 
 ### Lap 1 · 7:00 → 9:30:57 AM (2:30:57)
 - **Intake:** 800 cal · 30 oz · 1,356 mg sodium
@@ -80,12 +82,14 @@
 
 **Pit 9: 1:53:34 → 2:29:34 PM (36:00)**
 
-### Lap 10 · started 2:29:34 PM (in progress) — final lap
-- **Gear:** Rain stopped, cloudy. No shoe/sock change (feet feeling good)
+### Lap 10 · 2:29:34 → 6:23:16 PM (3:53:42) · final lap
+- **Intake:** 705 cal · 34 oz · 1,371 mg sodium
+- **Fuel:** 2 flasks Tailwind, 2 Spring Energy gels, 1 banana
+- **Weather:** Rain returned ~1h in, stopped around mile 5-6, dry to the finish
 
 ---
 
-## Oppenheimer · #2
+## Oppenheimer · #2 · finished 6:23:15 PM (D2) · 35:23:15
 
 ### Lap 1 · 7:00 → 9:30:57 AM (2:30:57)
 - **Intake:** 600 cal · 51 oz · 1,860 mg sodium
@@ -161,18 +165,20 @@
 
 **Pit 9: 1:51:55 → 2:29:34 PM (37:39)**
 
-### Lap 10 · started 2:29:34 PM (in progress) — final lap
-- **Gear:** Rain stopped, cloudy. No shoe/sock change (feet feeling good)
+### Lap 10 · 2:29:34 → 6:23:15 PM (3:53:41) · final lap
+- **Intake:** 710 cal · 51 oz · 1,910 mg sodium
+- **Fuel:** 3 flasks Tailwind, 1 Never Second gel
+- **Weather:** Rain returned ~1h in, stopped around mile 5-6, dry to the finish
 
 ---
 
-## Cumulative Through Lap 9 (90 mi)
+## FINAL TOTALS · 100 miles · 35h 23m
 
-| | Cum. cal | Cum. fluid | Cum. sodium | Total time |
+| | Total cal | Total fluid | Total sodium | Finish |
 |---|---:|---:|---:|---:|
-| Jasmine | 8,430 | 416 oz | 16,586 mg | 31:24 |
-| Oppenheimer | 8,055 | 479 oz | 20,005 mg | 31:24 |
+| **Jasmine** | **9,135** | **450 oz** (~13.3 L) | **17,957 mg** (~18 g) | 35:23:16 |
+| **Oppenheimer** | **8,765** | **530 oz** (~15.7 L) | **21,915 mg** (~22 g) | 35:23:15 |
 
-**Final lap underway:** 31h 29m on the clock at start of lap 10. **6h 30m to the 38h cutoff.** At the recent-2-lap pace (~3:42 average), they finish around **35:11** — about **2h 49m of buffer**.
+**Cutoff buffer:** 2h 36m under the 38h cutoff. Lap 10 was their slowest at 3:53 (Jasmine) / 3:53 (Oppenheimer), but the early bank carried the day.
 
-Lap 9 was their slowest (Jasmine 3:48, Oppenheimer 3:47), almost certainly the rain effect. Both came in feeling strong, peed clear, and stocked up hard for the final lap. Ten miles to go.
+**Total fueling across both runners:** 17,900 cal · 980 oz fluid · ~40 g sodium consumed in 35h 23m of running 200 combined miles.
