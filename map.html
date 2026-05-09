@@ -254,7 +254,7 @@
 </section>
 
 <footer>
-  <div>Markers are estimated from average lap pace · positions tick every second</div>
+  <div>Markers are estimated from the last 2 laps' average pace · positions tick every second</div>
   <div id="last-updated" class="note">—</div>
 </footer>
 
@@ -405,6 +405,9 @@
     const lapDurations = completed.map(l => (new Date(l.endTime) - new Date(l.startTime)) / 1000);
     const avgLap = lapDurations.length
       ? lapDurations.reduce((a, b) => a + b, 0) / lapDurations.length : null;
+    const recentLaps = lapDurations.slice(-2);
+    const recentAvgLap = recentLaps.length
+      ? recentLaps.reduce((a, b) => a + b, 0) / recentLaps.length : avgLap;
     const inProgressLap = laps.find(l => l.startTime && !l.endTime);
     const lastCompleted = completed[completed.length - 1] || null;
     const nextStarted = lastCompleted
@@ -412,7 +415,7 @@
       : false;
     const inPit = !!lastCompleted && !nextStarted && completed.length < race.totalLoops;
     const finished = completed.length >= race.totalLoops;
-    return { laps, completed, lapDurations, avgLap, inProgressLap, lastCompleted, inPit, finished };
+    return { laps, completed, lapDurations, avgLap, recentAvgLap, inProgressLap, lastCompleted, inPit, finished };
   }
 
   function computeRunnerPosition(runner, race) {
@@ -420,7 +423,7 @@
     if (s.finished) return { state: 'done', lap: race.totalLoops, fraction: 1, point: gpxPoints[0], detail: 'Finished' };
     if (s.inProgressLap) {
       const elapsed = Math.max(0, (Date.now() - new Date(s.inProgressLap.startTime).getTime()) / 1000);
-      const lapEstimate = s.avgLap || 2.75 * 3600;
+      const lapEstimate = s.recentAvgLap || s.avgLap || 2.75 * 3600;
       const fraction = Math.min(0.99, elapsed / lapEstimate);
       const distM = fraction * totalDistance;
       const point = pointAtDistance(distM);
