@@ -71,7 +71,17 @@
 
 **Pit 8: 9:37:00 → 10:05:13 AM (28:13)**
 
-### Lap 9 · started 10:05:13 AM (in progress)
+### Lap 9 · 10:05:13 AM → 1:53:34 PM (3:48:21) · sprinkles → steady rain back half
+- **Intake:** 1,395 cal · 41 oz · 2,600 mg sodium
+- **On lap:** 2 flasks + 150 mL Tailwind, 1 GoGo squeeZ applesauce, 1 Ketone-IQ shot, half Kate's Real Food bar (dark chocolate cherry & almond)
+- **Pit 9:** Idahoan buttery mashed potatoes cup, Uncrustable, 5-Hour Energy
+- **Meds:** 4× ibuprofen (peeing clear, hydration good)
+- **Gear:** Carried rain jacket
+
+**Pit 9: 1:53:34 → 2:29:34 PM (36:00)**
+
+### Lap 10 · started 2:29:34 PM (in progress) — final lap
+- **Gear:** Rain stopped, cloudy. No shoe/sock change (feet feeling good)
 
 ---
 
@@ -142,21 +152,27 @@
 
 **Pit 8: 9:21:00 → 10:05:13 AM (44:13)**
 
-### Lap 9 · started 10:05:13 AM (in progress)
+### Lap 9 · 10:05:13 AM → 1:51:55 PM (3:46:42) · sprinkles → steady rain back half
+- **Intake:** 955 cal · 63 oz · 2,760 mg sodium
+- **On lap:** 3× flasks Tailwind, 1 Huma gel
+- **Pit 9:** Half cup of ramen, half Monster Energy, 5-Hour Energy
+- **Meds:** 4× ibuprofen (peeing clear, hydration good)
+- **Gear:** Carried rain jacket
+
+**Pit 9: 1:51:55 → 2:29:34 PM (37:39)**
+
+### Lap 10 · started 2:29:34 PM (in progress) — final lap
+- **Gear:** Rain stopped, cloudy. No shoe/sock change (feet feeling good)
 
 ---
 
-## Cumulative Through Lap 8 (80 mi)
+## Cumulative Through Lap 9 (90 mi)
 
 | | Cum. cal | Cum. fluid | Cum. sodium | Total time |
 |---|---:|---:|---:|---:|
-| Jasmine | 7,035 | 375 oz | 13,986 mg | 26:38 |
-| Oppenheimer | 7,100 | 416 oz | 17,245 mg | 26:38 |
+| Jasmine | 8,430 | 416 oz | 16,586 mg | 31:24 |
+| Oppenheimer | 8,055 | 479 oz | 20,005 mg | 31:24 |
 
-**80-mile checkpoint:** 26h 38m elapsed at start of lap 9. Lap 8 came in at 3:38 (Jasmine, slowed slightly from lap 7) and 3:22 (Oppenheimer, ~5 min faster than lap 7 — daylight kicked in).
+**Final lap underway:** 31h 29m on the clock at start of lap 10. **6h 30m to the 38h cutoff.** At the recent-2-lap pace (~3:42 average), they finish around **35:11** — about **2h 49m of buffer**.
 
-**Pit 8 was lopsided:** Jasmine in/out in 28 min (sock change + bandaids); Oppenheimer in/out in 44 min (foot care + Tylenol switch + slower start). Both back out together.
-
-**Buffer math:** ~3:30 lap + 25 min pit cycle. Two more cycles + final lap ≈ 7:25 remaining = projected finish ~34:03. **~3h 57m of cutoff buffer.** Healthy.
-
-**Med change worth flagging:** Oppenheimer switched from ibuprofen to Tylenol in pit 8. That's the right move given his prior dose stack — Tylenol/acetaminophen isn't an NSAID and doesn't hit kidneys the same way. Foot pain is his new acute issue but not race-ending unless it worsens significantly.
+Lap 9 was their slowest (Jasmine 3:48, Oppenheimer 3:47), almost certainly the rain effect. Both came in feeling strong, peed clear, and stocked up hard for the final lap. Ten miles to go.
