@@ -61,6 +61,10 @@
           "startTime": "2026-05-08T22:51:22.000Z",
           "gearChanges": "Added headlamp (dusk); fresh socks",
           "endTime": "2026-05-09T01:53:18.990Z"
+        },
+        {
+          "lap": 6,
+          "startTime": "2026-05-09T02:17:06.882Z"
         }
       ]
     },
@@ -123,5 +127,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-09T02:17:02.513Z"
+  "lastUpdated": "2026-05-09T02:17:07.056Z"
 }
