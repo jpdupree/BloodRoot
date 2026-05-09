@@ -285,6 +285,35 @@
     font-family: 'JetBrains Mono', monospace; font-size: 12px;
   }
 
+  .race-stats {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 28px 32px;
+    margin-top: 32px; position: relative; overflow: hidden;
+  }
+  .race-stats[hidden] { display: none; }
+  .race-stats::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--green), transparent);
+  }
+  .race-stats h2 {
+    font-family: 'Fraunces', serif; font-weight: 600;
+    font-size: 30px; letter-spacing: -0.02em; margin-bottom: 4px;
+  }
+  .race-stats h2 em { font-style: italic; color: var(--green); font-weight: 600; }
+  .race-stats .subtitle {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--text-muted); letter-spacing: 0.18em;
+    text-transform: uppercase; margin-bottom: 18px;
+  }
+  .race-stats ul { list-style: none; padding: 0; margin: 0; }
+  .race-stats li {
+    padding: 12px 0; border-bottom: 1px solid var(--border);
+    font-size: 14px; line-height: 1.55; color: var(--text-dim);
+  }
+  .race-stats li:last-child { border-bottom: none; }
+  .race-stats li strong { color: var(--text); font-weight: 600; }
+  .race-stats li em { color: var(--accent); font-style: normal; font-weight: 600; }
+
   @media (max-width: 1300px) {
     .stats { grid-template-columns: repeat(4, 1fr); }
     .stat { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -336,6 +365,8 @@
 <div id="cutoffs" class="cutoffs"></div>
 <div id="error" style="display:none;"></div>
 <section id="runners" class="runners"></section>
+
+<section id="race-stats" class="race-stats" hidden></section>
 
 <footer>
   <div class="legend">
@@ -712,6 +743,7 @@
       renderCutoffs(raceData.race);
       document.getElementById('runners').innerHTML =
         raceData.runners.map(r => renderRunner(r, raceData.race)).join('');
+      renderRaceStats(raceData.race);
       document.getElementById('error').style.display = 'none';
       updateLastUpdatedLabel();
       tick();
@@ -733,6 +765,89 @@
       live = ago < 5 ? ' · live' : ` · checked ${ago}s ago`;
     }
     document.getElementById('last-updated').textContent = lu + live;
+  }
+
+  function renderRaceStats(race) {
+    const el = document.getElementById('race-stats');
+    if (!raceData || !raceData.runners || raceData.runners.length === 0) { el.hidden = true; return; }
+    const allFinished = raceData.runners.every(r => {
+      const done = (r.laps || []).filter(l => l.startTime && l.endTime).length;
+      return done >= race.totalLoops;
+    });
+    if (!allFinished) { el.hidden = true; return; }
+    el.hidden = false;
+
+    const stats = raceData.runners.map(r => {
+      const completed = (r.laps || []).filter(l => l.startTime && l.endTime);
+      const allLaps = r.laps || [];
+      const cal = completed.reduce((a, l) => a + (l.calories || 0), 0);
+      const fluidOz = completed.reduce((a, l) => a + (l.fluidOz || 0), 0);
+      const sodium = completed.reduce((a, l) => a + (l.sodiumMg || 0), 0);
+      const start = new Date(allLaps[0].startTime);
+      const end = new Date(completed[completed.length - 1].endTime);
+      const totalSec = (end - start) / 1000;
+      const courseSec = completed.reduce((a, l) =>
+        a + (new Date(l.endTime) - new Date(l.startTime)) / 1000, 0);
+      const pitSec = totalSec - courseSec;
+      let tailwindMl = 0;
+      for (const l of completed) {
+        const text = l.notes || '';
+        for (const m of text.matchAll(/(\d+(?:\.\d+)?)\s*mL\s+Tailwind/gi)) {
+          tailwindMl += parseFloat(m[1]);
+        }
+        for (const m of text.matchAll(/(\d+(?:\.\d+)?)\s*(?:x|×)?\s*flasks?\s+Tailwind/gi)) {
+          tailwindMl += parseFloat(m[1]) * 500;
+        }
+        for (const m of text.matchAll(/(\d+(?:\.\d+)?)\s*(?:x|×)?\s*Tailwind\s+flasks?/gi)) {
+          tailwindMl += parseFloat(m[1]) * 500;
+        }
+        for (const m of text.matchAll(/(\d+(?:\.\d+)?)\s*(?:x|×)?\s*flasks?\s*\+\s*\d+\s*mL\s+Tailwind/gi)) {
+          tailwindMl += parseFloat(m[1]) * 500;
+        }
+      }
+      const tailwindScoops = tailwindMl / 500;
+      const tailwindCal = tailwindScoops * 200;
+      const tailwindNa = tailwindScoops * 620;
+      return { runner: r, cal, fluidOz, sodium, totalSec, courseSec, pitSec,
+               tailwindScoops, tailwindMl, tailwindCal, tailwindNa };
+    });
+
+    const tw = stats.reduce((a, b) => b.tailwindScoops > a.tailwindScoops ? b : a, stats[0]);
+
+    const fmtH = sec => {
+      const h = Math.floor(sec / 3600);
+      const m = Math.floor((sec % 3600) / 60);
+      return `${h}h ${m}m`;
+    };
+    const ozToL = oz => (oz * 0.0295735).toFixed(1);
+    const ozToGal = oz => (oz / 128).toFixed(1);
+
+    const calLines = stats.map(s =>
+      `<strong>${s.cal.toLocaleString()}</strong> cal (${s.runner.name})`
+    ).join(' / ');
+    const fluidLines = stats.map(s =>
+      `<strong>${ozToL(s.fluidOz)} L</strong> (${s.runner.name})`
+    ).join(' / ');
+    const sodiumLines = stats.map(s =>
+      `<strong>${(s.sodium/1000).toFixed(1)} g</strong> (${s.runner.name})`
+    ).join(' / ');
+
+    const totalSec = stats[0].totalSec;
+    const courseSec = stats[0].courseSec;
+    const pitSec = stats[0].pitSec;
+
+    el.innerHTML = `
+      <div class="subtitle">Finished · 100 miles · both runners</div>
+      <h2>The Race · in <em>Numbers</em></h2>
+      <ul>
+        <li>${calLines} — more than <strong>4× a normal day's intake</strong>. Estimated burn ~12,000-13,000 cal each, so a 3-4k cal deficit per runner. Par for an ultra.</li>
+        <li>${fluidLines} of fluid consumed. That's a <strong>~${ozToGal(Math.max(...stats.map(s=>s.fluidOz)))}-gallon</strong> water jug for the higher-volume runner.</li>
+        <li>${sodiumLines} cumulative sodium. Daily adult recommendation is ~1.5 g — they each hit <strong>5-7×</strong> that on their own.</li>
+        <li><strong>${fmtH(totalSec)}</strong> total race time — <strong>${fmtH(courseSec)}</strong> on course, <strong>${fmtH(pitSec)}</strong> in pit. Lap 10 was the slowest at <strong>~3:53</strong> for both, but they crossed within <strong>1 second</strong> of each other.</li>
+        <li><strong>${tw.runner.name}</strong> ran on a Tailwind drip: <strong>~${tw.tailwindScoops.toFixed(1)} scoops</strong>, ~${(tw.tailwindMl/1000).toFixed(1)} L of mixed drink, ~${tw.tailwindCal.toLocaleString()} cal (<strong>${Math.round(tw.tailwindCal/tw.cal*100)}%</strong> of total cal), ~${(tw.tailwindNa/1000).toFixed(1)} g sodium (<strong>${Math.round(tw.tailwindNa/tw.sodium*100)}%</strong> of total sodium).</li>
+        <li>Cumulative ibuprofen: Jasmine ~14-15 doses, Oppenheimer ~16-17 (with one Tylenol detour at pit 8). Hydration stayed strong throughout — the urine-color check held.</li>
+      </ul>
+    `;
   }
 
   const LAPLOG_KEY = 'dashboard-laplog-collapsed-v1';
