@@ -100,7 +100,9 @@
         },
         {
           "lap": 9,
-          "startTime": "2026-05-09T14:05:13.000Z"
+          "startTime": "2026-05-09T14:05:13.000Z",
+          "gearChanges": "Carrying rain jacket",
+          "notes": "Sprinkles started ~11:00 AM EDT mid-lap"
         }
       ]
     },
@@ -194,10 +196,12 @@
         },
         {
           "lap": 9,
-          "startTime": "2026-05-09T14:05:13.000Z"
+          "startTime": "2026-05-09T14:05:13.000Z",
+          "gearChanges": "Carrying rain jacket",
+          "notes": "Sprinkles started ~11:00 AM EDT mid-lap"
         }
       ]
     }
   ],
-  "lastUpdated": "2026-05-09T14:10:00Z"
+  "lastUpdated": "2026-05-09T15:05:00Z"
 }
