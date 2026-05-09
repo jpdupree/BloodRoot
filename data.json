@@ -60,11 +60,16 @@
           "lap": 5,
           "startTime": "2026-05-08T22:51:22.000Z",
           "gearChanges": "Added headlamp (dusk); fresh socks",
-          "endTime": "2026-05-09T01:53:18.990Z"
+          "endTime": "2026-05-09T01:53:18.000Z",
+          "calories": 1360,
+          "fluidOz": 48,
+          "sodiumMg": 2910,
+          "issues": "Stepped in water puddle on course; hotspot on big toe at pit-in",
+          "notes": "On lap: 1100 mL Tailwind, 1 Spring gel, Bobo's. Pit 5: Maruchan cup ramen, 200 mL Coke, Little Debbie oatmeal cream pie. Body care: bandaged big toe hotspot, fresh socks"
         },
         {
           "lap": 6,
-          "startTime": "2026-05-09T02:17:06.882Z"
+          "startTime": "2026-05-09T02:17:06.000Z"
         }
       ]
     },
@@ -118,14 +123,18 @@
           "lap": 5,
           "startTime": "2026-05-08T22:51:22.000Z",
           "gearChanges": "Added headlamp (dusk)",
-          "endTime": "2026-05-09T01:53:50.452Z"
+          "endTime": "2026-05-09T01:53:50.000Z",
+          "calories": 1240,
+          "fluidOz": 62,
+          "sodiumMg": 3330,
+          "notes": "On lap: 3x flasks Tailwind, 1 Huma gel. Pit 5: Maruchan cup ramen, 200 mL Coke, Little Debbie oatmeal cream pie"
         },
         {
           "lap": 6,
-          "startTime": "2026-05-09T02:17:02.149Z"
+          "startTime": "2026-05-09T02:17:02.000Z"
         }
       ]
     }
   ],
-  "lastUpdated": "2026-05-09T02:17:07.056Z"
+  "lastUpdated": "2026-05-09T02:25:00Z"
 }
