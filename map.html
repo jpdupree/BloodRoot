@@ -424,14 +424,21 @@
     if (s.inProgressLap) {
       const elapsed = Math.max(0, (Date.now() - new Date(s.inProgressLap.startTime).getTime()) / 1000);
       const lapEstimate = s.recentAvgLap || s.avgLap || 2.75 * 3600;
-      const manualMiles = typeof s.inProgressLap.miles === 'number' ? s.inProgressLap.miles : null;
-      const fraction = manualMiles != null && race.loopDistance > 0
-        ? Math.min(0.99, manualMiles / race.loopDistance)
+      const baseMiles = typeof s.inProgressLap.miles === 'number' ? s.inProgressLap.miles : null;
+      let projectedMiles = null;
+      if (baseMiles != null && race.loopDistance > 0) {
+        const milesAtTs = s.inProgressLap.milesAt ? new Date(s.inProgressLap.milesAt).getTime() : null;
+        const sinceSpotted = milesAtTs ? Math.max(0, (Date.now() - milesAtTs) / 1000) : 0;
+        const milesPerSecond = race.loopDistance / lapEstimate;
+        projectedMiles = Math.min(race.loopDistance * 0.99, baseMiles + sinceSpotted * milesPerSecond);
+      }
+      const fraction = projectedMiles != null
+        ? projectedMiles / race.loopDistance
         : Math.min(0.99, elapsed / lapEstimate);
       const distM = fraction * totalDistance;
       const point = pointAtDistance(distM);
-      const milesLabel = manualMiles != null
-        ? `${manualMiles.toFixed(1)} mi (spotted)`
+      const milesLabel = projectedMiles != null
+        ? `${projectedMiles.toFixed(1)} mi (from spot)`
         : `~${metersToMiles(distM).toFixed(1)} mi`;
       return {
         state: 'course', lap: s.inProgressLap.lap, fraction, elapsed, point,
