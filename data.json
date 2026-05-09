@@ -115,9 +115,13 @@
           "startTime": "2026-05-08T22:51:22.000Z",
           "gearChanges": "Added headlamp (dusk)",
           "endTime": "2026-05-09T01:53:50.452Z"
+        },
+        {
+          "lap": 6,
+          "startTime": "2026-05-09T02:17:02.149Z"
         }
       ]
     }
   ],
-  "lastUpdated": "2026-05-09T01:53:50.692Z"
+  "lastUpdated": "2026-05-09T02:17:02.513Z"
 }
