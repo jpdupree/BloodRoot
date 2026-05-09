@@ -61,8 +61,17 @@
 
 **Pit 7: 5:35:25 → 5:58:37 AM (23:12)**
 
-### Lap 8 · started 5:58:37 AM (in progress) · daylight
-- **Gear:** Headlamp put away
+### Lap 8 · 5:58:37 → 9:37:00 AM (3:38:23) · daylight
+- **Intake:** 925 cal · 34 oz · 1,890 mg sodium
+- **On lap:** 1 flask + 300 mL Tailwind, 150 mL water, 1 Spring Energy XL Peach Cobbler
+- **Pit 8:** Cinnamon-sugar croissant donut, half cup of ramen
+- **Body care:** Fresh socks, fresh bandaids on both big toes
+- **Issues:** Blisters on both big toes (stable, not growing)
+- **Gear:** Headlamp put away (daylight, start of lap)
+
+**Pit 8: 9:37:00 → 10:05:13 AM (28:13)**
+
+### Lap 9 · started 10:05:13 AM (in progress)
 
 ---
 
@@ -123,20 +132,31 @@
 
 **Pit 7: 5:35:24 → 5:58:37 AM (23:13)**
 
-### Lap 8 · started 5:58:37 AM (in progress) · daylight
-- **Gear:** Headlamp put away
+### Lap 8 · 5:58:37 → 9:21:00 AM (3:22:23) · daylight
+- **Intake:** 885 cal · 53 oz · 2,080 mg sodium
+- **On lap:** 3× flasks Tailwind, 5-hour Energy
+- **Pit 8:** Cinnamon-sugar croissant donut
+- **Meds:** 2× Tylenol (switched off ibuprofen)
+- **Issues:** Bottom of foot pain at pit-in
+- **Gear:** Headlamp put away (daylight, start of lap)
+
+**Pit 8: 9:21:00 → 10:05:13 AM (44:13)**
+
+### Lap 9 · started 10:05:13 AM (in progress)
 
 ---
 
-## Cumulative Through Lap 7 (70 mi)
+## Cumulative Through Lap 8 (80 mi)
 
 | | Cum. cal | Cum. fluid | Cum. sodium | Total time |
 |---|---:|---:|---:|---:|
-| Jasmine | 6,110 | 341 oz | 12,096 mg | 22:35 |
-| Oppenheimer | 6,215 | 363 oz | 15,165 mg | 22:35 |
+| Jasmine | 7,035 | 375 oz | 13,986 mg | 26:38 |
+| Oppenheimer | 7,100 | 416 oz | 17,245 mg | 26:38 |
 
-**70-mile checkpoint:** 22h 35m elapsed at start of lap 8. Lap 7 came in at 3:27 — 4 minutes faster than lap 6 (3:31). They're holding pace, not still falling. Pit 7 was 23 min, slightly faster than pit 6. Sunrise + caffeine combo working as intended.
+**80-mile checkpoint:** 26h 38m elapsed at start of lap 9. Lap 8 came in at 3:38 (Jasmine, slowed slightly from lap 7) and 3:22 (Oppenheimer, ~5 min faster than lap 7 — daylight kicked in).
 
-**Cumulative ibuprofen totals:** Jasmine 10-11 doses (3 + 4 + 3-4); Oppenheimer 11-12 doses (4 + 4 + 3-4). Both are well into the "watch hard" zone for NSAID-related kidney stress. No more should go in unless something acute happens.
+**Pit 8 was lopsided:** Jasmine in/out in 28 min (sock change + bandaids); Oppenheimer in/out in 44 min (foot care + Tylenol switch + slower start). Both back out together.
 
-**Buffer math:** at the recent-2-lap+pit cycle of ~3:50, four cycles puts the projected finish at ~38:05 — essentially right at the 38h cutoff. They need lap 8 to come in faster than the night laps (daylight should help) to bank back any meaningful buffer.
+**Buffer math:** ~3:30 lap + 25 min pit cycle. Two more cycles + final lap ≈ 7:25 remaining = projected finish ~34:03. **~3h 57m of cutoff buffer.** Healthy.
+
+**Med change worth flagging:** Oppenheimer switched from ibuprofen to Tylenol in pit 8. That's the right move given his prior dose stack — Tylenol/acetaminophen isn't an NSAID and doesn't hit kidneys the same way. Foot pain is his new acute issue but not race-ending unless it worsens significantly.
