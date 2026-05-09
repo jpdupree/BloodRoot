@@ -13,23 +13,23 @@
 **Pit 1: 9:30:57 → 9:41:10 AM (10:13)**
 
 ### Lap 2 · 9:41:10 AM → 12:19:52 PM (2:38:42)
-- **Intake:** 1,300 cal · 56 oz · 2,850 mg sodium
-- **On lap:** 1,100 mL Tailwind (one flask spiked with LMNT), 2× Spring gels, Bobo's
+- **Intake:** 1,110 cal · 56 oz · 2,230 mg sodium
+- **On lap:** 1 flask water + LMNT, 1 flask + 100 mL Tailwind, 2× Spring gels, Bobo's
 - **Pit 2:** 12 oz Celsius, Uncrustable, 200 mL Coke, handful of Gushers
 - **Issues:** Twisted ankle mid-lap; planned to tape but said it felt good at pit-in
 
 **Pit 2: 12:19:52 → 12:35:34 PM (15:42)**
 
 ### Lap 3 · 12:35:34 → 3:15:30 PM (2:39:56)
-- **Intake:** 1,080 cal · 48 oz · 1,750 mg sodium
-- **On lap:** 1,200 mL Tailwind, 2× Spring gels, 1× Spring Energy XL Peach Cobbler
+- **Intake:** 880 cal · 48 oz · 1,130 mg sodium
+- **On lap:** 1 flask water, 1 flask + 200 mL Tailwind, 2× Spring gels, 1× Spring Energy XL Peach Cobbler
 - **Pit 3:** 200 mL Coke, ~5 sweetened dried mangoes
 
 **Pit 3: 3:15:30 → 3:32:15 PM (16:45)**
 
 ### Lap 4 · 3:32:15 → 6:24:39 PM (2:52:24)
-- **Intake:** 1,190 cal · 62 oz · 3,010 mg sodium
-- **On lap:** 2× flasks + 150 mL Tailwind, 1 Spring gel, 1 GoGo squeeZ applesauce, 1 Ketone-IQ shot
+- **Intake:** 990 cal · 62 oz · 2,390 mg sodium
+- **On lap:** 1 flask water, 1 flask + 150 mL Tailwind, 1 Spring gel, 1 GoGo squeeZ applesauce, 1 Ketone-IQ shot
 - **Pit 4:** Maruchan cup ramen, 200 mL ginger ale, 12 oz Gatorade lemon-lime
 - **Meds:** 3× ibuprofen
 - **Body care:** Re-lubed toes, fresh socks
@@ -37,8 +37,8 @@
 **Pit 4: 6:24:39 → 6:51:22 PM (26:43)**
 
 ### Lap 5 · 6:51:22 → 9:53:18 PM (3:01:56) · headlamps on
-- **Intake:** 1,360 cal · 48 oz · 2,910 mg sodium
-- **On lap:** 1,100 mL Tailwind, 1 Spring gel, Bobo's
+- **Intake:** 1,160 cal · 48 oz · 2,290 mg sodium
+- **On lap:** 1 flask water, 1 flask + 100 mL Tailwind, 1 Spring gel, Bobo's
 - **Pit 5:** Maruchan cup ramen, 200 mL Coke, Little Debbie oatmeal cream pie
 - **Issues:** Stepped in water puddle on course; hotspot on big toe at pit-in
 - **Body care:** Bandaged big toe hotspot, fresh socks
@@ -98,7 +98,7 @@
 
 | | Cum. cal | Cum. fluid | Cum. sodium | Total time |
 |---|---:|---:|---:|---:|
-| Jasmine | 5,730 | 244 oz | 11,876 mg | 15:17 |
+| Jasmine | 4,930 | 244 oz | 9,396 mg | 15:17 |
 | Oppenheimer | 4,820 | 273 oz | 11,960 mg | 15:17 |
 
 **Halfway report:** 50 mi done in 15h 17m. Average lap+pit so far: ~3:03. At this pace, projected finish ~30:34. They have ~7.5h of buffer to the 38h cutoff and ~19.5h to complete the remaining 5 laps before the 35h start-of-lap-10 gate.
