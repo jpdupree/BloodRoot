@@ -102,7 +102,8 @@
           "lap": 9,
           "startTime": "2026-05-09T14:05:13.000Z",
           "gearChanges": "Carrying rain jacket",
-          "notes": "Sprinkles started ~11:00 AM EDT mid-lap, picked up to steady rain for the back half of the lap"
+          "notes": "Sprinkles started ~11:00 AM EDT mid-lap, picked up to steady rain for the back half of the lap",
+          "endTime": "2026-05-09T17:53:34.057Z"
         }
       ]
     },
@@ -204,5 +205,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-09T17:51:55.719Z"
+  "lastUpdated": "2026-05-09T17:53:34.361Z"
 }
