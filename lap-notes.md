@@ -182,3 +182,13 @@
 **Cutoff buffer:** 2h 36m under the 38h cutoff. Lap 10 was their slowest at 3:53 (Jasmine) / 3:53 (Oppenheimer), but the early bank carried the day.
 
 **Total fueling across both runners:** 17,900 cal · 980 oz fluid · ~40 g sodium consumed in 35h 23m of running 200 combined miles.
+
+### Absurd context
+
+- **9,000+ calories** is more than 4× a normal day's intake. They burned roughly 12-13,000 across 100 miles, so they ran a 3-4k calorie deficit each — par for an ultra.
+- **15+ liters of fluid** through Oppenheimer alone. That's a 4-gallon water jug.
+- **~40 grams of sodium** between them. The daily recommendation for adults is ~1.5 g — they each hit ~5-7× that on their own.
+- **35h 23m of moving** — only ~3h of cumulative pit time. They were out on course for ~32 hours straight.
+- **Lap 10 came in at 3:53 for both.** Slowest lap of the race, but they crossed together.
+- **Oppenheimer drank ~27.5 scoops of Tailwind** across the race — ~13.75 L of mixed drink, ~5,500 calories, ~17 g sodium. About 63% of his total calories and 78% of his total sodium came from Tailwind alone. He basically ran the race on a Tailwind drip with strategic ramen and donuts mixed in.
+- **Cumulative ibuprofen:** Jasmine ~14-15 doses, Oppenheimer ~16-17 doses (with one Tylenol detour at pit 8). Hydration stayed strong throughout — the urine-color check held.
