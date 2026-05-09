@@ -45,7 +45,15 @@
 
 **Pit 5: 9:53:18 → 10:17:06 PM (23:48)**
 
-### Lap 6 · started 10:17:06 PM (in progress)
+### Lap 6 · 10:17:06 PM → 1:48:42 AM (3:31:36) · overnight
+- **Intake:** 520 cal · 51 oz · 1,150 mg sodium
+- **On lap:** 1.5 flasks Tailwind, 1 flask water, 5-hour Energy
+- **Pit 6:** Uncrustable, 200 mL instant coffee
+- **Meds:** 4× ibuprofen (around midnight)
+
+**Pit 6: 1:48:42 → 2:08:15 AM (19:33)**
+
+### Lap 7 · started 2:08:15 AM (in progress)
 
 ---
 
@@ -90,17 +98,23 @@
 
 **Pit 5: 9:53:50 → 10:17:02 PM (23:12)**
 
-### Lap 6 · started 10:17:02 PM (in progress)
+### Lap 6 · 10:17:02 PM → 1:48:44 AM (3:31:42) · overnight
+- **Intake:** 760 cal · 49 oz · 1,700 mg sodium
+- **On lap:** 2.5 flasks Tailwind, 1 Huma gel
+- **Pit 6:** 1 Little Debbie Nutty Buddy stick, 200 mL instant coffee
+- **Meds:** 4× ibuprofen (around midnight)
+
+**Pit 6: 1:48:44 → 2:08:15 AM (19:31)**
+
+### Lap 7 · started 2:08:15 AM (in progress)
 
 ---
 
-## Cumulative Through Lap 5 (50 mi)
+## Cumulative Through Lap 6 (60 mi)
 
 | | Cum. cal | Cum. fluid | Cum. sodium | Total time |
 |---|---:|---:|---:|---:|
-| Jasmine | 4,930 | 244 oz | 9,396 mg | 15:17 |
-| Oppenheimer | 4,820 | 273 oz | 11,960 mg | 15:17 |
+| Jasmine | 5,450 | 295 oz | 10,546 mg | 19:08 |
+| Oppenheimer | 5,580 | 322 oz | 13,660 mg | 19:08 |
 
-**Halfway report:** 50 mi done in 15h 17m. Average lap+pit so far: ~3:03. At this pace, projected finish ~30:34. They have ~7.5h of buffer to the 38h cutoff and ~19.5h to complete the remaining 5 laps before the 35h start-of-lap-10 gate.
-
-**Lap 5 was the first night lap** — both ran ~9 minutes slower than lap 4, which is expected with headlamps on technical terrain. Pit 5 also ran longer (~24 min vs ~17 min normal) for ramen prep and Jasmine's sock change.
+**60-mile checkpoint:** 19h 8m elapsed. Lap 6 came in at 3:32 (29 min slower than lap 5) — deepest fatigue lap so far, classic 1-3 AM trough. Average lap+pit cycle now ~3:11, projected finish ~32:44, **~5h 16m of cutoff buffer remaining**. The 35h start-of-lap-10 gate would arrive after ~13 more hours, vs ~10 hours of running for 4 more lap+pit cycles at current pace — still safe but margins are tighter than they were at halfway.
