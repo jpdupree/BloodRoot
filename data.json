@@ -113,10 +113,11 @@
           "lap": 10,
           "startTime": "2026-05-09T18:29:34.000Z",
           "gearChanges": "Final lap — rain stopped, cloudy, no shoe/sock change (feet feeling good)",
-          "notes": "Rain picked back up ~1 hour in, stopped around mile 5-6. Back-half dry",
-          "miles": 8,
-          "milesAt": "2026-05-09T21:38:00Z",
-          "endTime": "2026-05-09T22:23:16.723Z"
+          "endTime": "2026-05-09T22:23:16.000Z",
+          "calories": 705,
+          "fluidOz": 34,
+          "sodiumMg": 1371,
+          "notes": "On lap: 2 flasks Tailwind, 2 Spring Energy gels, 1 banana. Rain picked back up ~1 hour in, stopped around mile 5-6. Back-half dry"
         }
       ]
     },
@@ -223,11 +224,14 @@
           "lap": 10,
           "startTime": "2026-05-09T18:29:34.000Z",
           "gearChanges": "Final lap — rain stopped, cloudy, no shoe/sock change (feet feeling good)",
-          "notes": "Rain picked back up ~1 hour in, stopped around mile 5-6. Back-half dry",
-          "endTime": "2026-05-09T22:23:15.352Z"
+          "endTime": "2026-05-09T22:23:15.000Z",
+          "calories": 710,
+          "fluidOz": 51,
+          "sodiumMg": 1910,
+          "notes": "On lap: 3 flasks Tailwind, 1 Never Second gel. Rain picked back up ~1 hour in, stopped around mile 5-6. Back-half dry"
         }
       ]
     }
   ],
-  "lastUpdated": "2026-05-09T22:23:17.707Z"
+  "lastUpdated": "2026-05-09T22:35:00Z"
 }
