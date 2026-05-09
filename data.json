@@ -91,11 +91,16 @@
           "lap": 8,
           "startTime": "2026-05-09T09:58:37.000Z",
           "gearChanges": "Headlamp put away (daylight)",
-          "endTime": "2026-05-09T13:37:00.000Z"
+          "endTime": "2026-05-09T13:37:00.000Z",
+          "calories": 925,
+          "fluidOz": 34,
+          "sodiumMg": 1890,
+          "issues": "Blisters on both big toes (stable, not growing)",
+          "notes": "On lap: 1 flask + 300 mL Tailwind, 150 mL water, 1 Spring Energy XL Peach Cobbler. Pit 8: cinnamon-sugar croissant donut, half cup of ramen. Body care: fresh socks, fresh bandaids on both big toes"
         },
         {
           "lap": 9,
-          "startTime": "2026-05-09T14:05:13.016Z"
+          "startTime": "2026-05-09T14:05:13.000Z"
         }
       ]
     },
@@ -179,14 +184,20 @@
           "lap": 8,
           "startTime": "2026-05-09T09:58:37.000Z",
           "gearChanges": "Headlamp put away (daylight)",
-          "endTime": "2026-05-09T13:21:00.000Z"
+          "endTime": "2026-05-09T13:21:00.000Z",
+          "calories": 885,
+          "fluidOz": 53,
+          "sodiumMg": 2080,
+          "meds": "2x Tylenol (pit 8 — switched off ibuprofen)",
+          "issues": "Bottom of foot pain at pit-in",
+          "notes": "On lap: 3x flasks Tailwind, 5-hour Energy. Pit 8: cinnamon-sugar croissant donut"
         },
         {
           "lap": 9,
-          "startTime": "2026-05-09T14:05:13.520Z"
+          "startTime": "2026-05-09T14:05:13.000Z"
         }
       ]
     }
   ],
-  "lastUpdated": "2026-05-09T14:05:14.384Z"
+  "lastUpdated": "2026-05-09T14:10:00Z"
 }
