@@ -339,6 +339,153 @@
     .laplog table { font-size: 11px; }
     .laplog th, .laplog td { padding: 8px 4px; }
   }
+
+  @media print {
+    @page { size: letter portrait; margin: 0.5in; }
+
+    *, *::before, *::after {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      animation: none !important;
+      transition: none !important;
+    }
+
+    html, body {
+      background: white !important;
+      background-image: none !important;
+      color: #111 !important;
+      font-size: 10.5pt;
+    }
+    body { padding: 0 !important; }
+
+    /* Strip interactive / animated chrome */
+    a.map-link, .pulse, .laplog-head-toggle { display: none !important; }
+    .laplog-head { cursor: default !important; padding: 12px 2px 6px; }
+
+    /* Header */
+    header {
+      border-bottom: 1px solid #999;
+      padding-bottom: 12pt; margin-bottom: 14pt;
+    }
+    h1 { color: #111 !important; font-size: 24pt; }
+    h1 em { color: #c44a18 !important; }
+    .brand-meta { color: #555 !important; }
+    .race-clock .label { color: #555 !important; }
+    .race-clock .time { color: #111 !important; font-size: 18pt; }
+
+    /* Cutoffs */
+    .cutoffs {
+      background: #f6f6f6 !important;
+      border: 1px solid #bbb !important;
+      padding: 12pt 16pt; margin-bottom: 14pt;
+      page-break-inside: avoid;
+    }
+    .cutoffs-label { color: #555 !important; }
+    .cutoff-item .v { color: #111 !important; }
+    .cutoff-item .l { color: #555 !important; }
+    .cutoff-item.warn .v { color: #8a6700 !important; }
+    .cutoff-item.danger .v { color: #a82626 !important; }
+
+    /* Runners — stacked, no split across pages */
+    .runners { display: block !important; }
+    .runner {
+      background: white !important;
+      border: 1px solid #999 !important;
+      page-break-inside: avoid;
+      margin-bottom: 16pt;
+    }
+    .runner::before { display: none; }
+    .runner-head {
+      padding: 14pt 16pt 10pt;
+      border-bottom: 1px solid #ddd !important;
+    }
+    .runner-name { color: #111 !important; font-size: 22pt; }
+    .runner-bib { color: #555 !important; }
+
+    /* Status pills (recolor for paper) */
+    .status-onpace { color: #1f6e3a !important; border-color: #1f6e3a !important; }
+    .status-tight { color: #8a6700 !important; border-color: #8a6700 !important; }
+    .status-offpace { color: #a82626 !important; border-color: #a82626 !important; }
+    .status-notstarted { color: #555 !important; border-color: #555 !important; }
+
+    /* Stat grid */
+    .stats {
+      grid-template-columns: repeat(4, 1fr) !important;
+      border-bottom: 1px solid #ddd !important;
+    }
+    .stat {
+      padding: 10pt 12pt;
+      border-right: 1px solid #ddd !important;
+      border-bottom: 1px solid #ddd !important;
+    }
+    .stat:nth-child(4n) { border-right: none !important; }
+    .stat:nth-last-child(-n+4) { border-bottom: none !important; }
+    .stat .label { color: #555 !important; }
+    .stat .value, .stat.live .value, .stat.live-course .value { color: #111 !important; }
+    .stat.live-pit .value { color: #1f6e3a !important; }
+    .stat .sub { color: #777 !important; }
+
+    /* Intake bars */
+    .intake { padding: 12pt 16pt 14pt; border-bottom: 1px solid #ddd !important; }
+    .intake-title { color: #555 !important; }
+    .intake-row .name { color: #111 !important; }
+    .intake-row .num { color: #111 !important; }
+    .intake-row .target { color: #555 !important; }
+    .bar-track { background: #ddd !important; }
+    .bar-fill.good { background: #1f6e3a !important; }
+    .bar-fill.warn { background: #8a6700 !important; }
+    .bar-fill.low { background: #a82626 !important; }
+
+    /* Lap pills */
+    .laps { padding: 12pt 16pt 14pt; }
+    .laps-title { color: #555 !important; }
+    .laps-grid { grid-template-columns: repeat(10, 1fr) !important; gap: 4pt; margin-bottom: 12pt; }
+    .lap-cell { background: white !important; border: 1px solid #999 !important; }
+    .lap-cell .n { color: #555 !important; }
+    .lap-cell .t { color: #111 !important; }
+    .lap-cell.done { background: #e1f4e7 !important; border-color: #1f6e3a !important; }
+    .lap-cell.done .t { color: #1f6e3a !important; }
+    .lap-cell.slow { background: #fbf3d4 !important; border-color: #8a6700 !important; }
+    .lap-cell.slow .t { color: #8a6700 !important; }
+    .lap-cell.danger { background: #fadbdb !important; border-color: #a82626 !important; }
+    .lap-cell.danger .t { color: #a82626 !important; }
+    .lap-cell.current { background: #fce6da !important; border-color: #c44a18 !important; }
+    .lap-cell.current .t { color: #c44a18 !important; }
+
+    /* Lap log — force expanded, show every row */
+    .laplog { border-top: 1px solid #ddd !important; }
+    .laplog.collapsed tr.lap-old,
+    .laplog.collapsed tr.note-old { display: table-row !important; }
+    .laplog-head-title { color: #555 !important; }
+    .laplog th { color: #555 !important; border-bottom: 1px solid #999 !important; }
+    .laplog td { border-bottom: 1px solid #eee !important; }
+    .laplog tr.note-row td { color: #555 !important; }
+    .laplog .lap-num { color: #c44a18 !important; }
+
+    /* Race in Numbers — new page, no split */
+    .race-stats {
+      background: white !important;
+      border: 1px solid #999 !important;
+      page-break-before: always;
+      page-break-inside: avoid;
+      margin-top: 0;
+    }
+    .race-stats::before { display: none; }
+    .race-stats h2 { color: #111 !important; font-size: 22pt; }
+    .race-stats h2 em { color: #1f6e3a !important; }
+    .race-stats .subtitle { color: #555 !important; }
+    .race-stats li { color: #333 !important; border-bottom: 1px solid #eee !important; }
+    .race-stats li strong { color: #111 !important; }
+    .race-stats li em { color: #c44a18 !important; }
+
+    /* Footer */
+    footer {
+      margin-top: 14pt; padding-top: 10pt;
+      border-top: 1px solid #999 !important;
+      color: #555 !important;
+    }
+    .legend, .legend-item, #last-updated { color: #555 !important; }
+  }
 </style>
 </head>
 <body>
