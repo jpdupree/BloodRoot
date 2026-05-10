@@ -1048,7 +1048,9 @@
     saveLaplogState(s);
   });
 
-  document.getElementById('print-btn').addEventListener('click', () => window.print());
+  document.getElementById('print-btn').addEventListener('click', () => {
+    window.open('print-report.html', '_blank');
+  });
 
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') load();
