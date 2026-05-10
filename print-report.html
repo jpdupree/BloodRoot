@@ -573,8 +573,11 @@
     let status = 'onpace';
     if (lapDurations.length > 0 && avgLap) {
       const proj = (avgLap + (avgPit||0)) * race.totalLoops;
-      if (proj > race.totalCutoffHours*3600) status = 'offpace';
-      else if (proj > race.lastLapStartCutoffHours*3600) status = 'tight';
+      const cutoffSec = race.totalCutoffHours * 3600;
+      // "Tight" = projected finish within 2.5% of the cutoff (~57min at 38h).
+      const tightThreshold = cutoffSec * (1 - 0.025);
+      if (proj > cutoffSec) status = 'offpace';
+      else if (proj > tightThreshold) status = 'tight';
     }
 
     let totalSec = null, courseSec = null, pitSec = null;
