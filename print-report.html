@@ -804,7 +804,7 @@
       .setView([gpxPoints[0].lat, gpxPoints[0].lon], 14);
 
     // Light-paper friendly tiles
-    const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/voyager/{z}/{x}/{y}.png', {
+    const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap &copy; CARTO',
       subdomains: 'abcd', maxZoom: 19
     }).addTo(map);
