@@ -628,8 +628,13 @@
     if (lapDurations.length > 0 && avgLap) {
       const avgPitForProjection = avgPit != null ? avgPit : 0;
       const projected = (avgLap + avgPitForProjection) * race.totalLoops;
-      if (projected > race.totalCutoffHours * 3600) status = 'offpace';
-      else if (projected > race.lastLapStartCutoffHours * 3600) status = 'tight';
+      const cutoffSec = race.totalCutoffHours * 3600;
+      // "Tight" = projected finish within 2.5% of the cutoff (~57min at a 38h cutoff).
+      // The 35h last-lap-start gate is still shown in the cutoffs bar but isn't what
+      // drives the lap-color status anymore — overall buffer to the final cutoff does.
+      const tightThreshold = cutoffSec * (1 - 0.025);
+      if (projected > cutoffSec) status = 'offpace';
+      else if (projected > tightThreshold) status = 'tight';
       else status = 'onpace';
     } else if (inProgressLap) {
       status = 'onpace';
