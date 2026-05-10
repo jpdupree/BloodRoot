@@ -662,8 +662,11 @@
     };
   }
 
-  function lapClass(durationSec) {
+  function lapClass(durationSec, runnerStatus) {
     if (durationSec == null) return '';
+    // Lap colors mirror the runner's overall projected status. A slow lap only
+    // earns a yellow/red badge if the projection actually shows tight/off-pace.
+    if (runnerStatus === 'onpace') return 'done';
     if (durationSec < 3.83 * 3600) return 'done';   // < 3:50 — fine given banked buffer
     if (durationSec < 4.17 * 3600) return 'slow';   // 3:50 - 4:10 — eating into buffer
     return 'danger';                                // > 4:10 — over with no margin
@@ -705,7 +708,7 @@
       const dur = c.lapDurations[idx];
       const isCurrent = idx === c.lapsDone && c.status !== 'notstarted' && c.lapsDone < race.totalLoops;
       let cls = '';
-      if (dur != null) cls = lapClass(dur);
+      if (dur != null) cls = lapClass(dur, c.status);
       if (isCurrent) cls = 'current';
       const text = dur != null
         ? fmtDuration(dur).replace(/^00:/, '')
