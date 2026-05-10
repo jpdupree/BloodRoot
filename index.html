@@ -314,6 +314,22 @@
   .race-stats li strong { color: var(--text); font-weight: 600; }
   .race-stats li em { color: var(--accent); font-style: normal; font-weight: 600; }
 
+  .print-trigger {
+    margin-top: 24px;
+    display: flex; justify-content: center;
+  }
+  .print-trigger button {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600;
+    color: var(--text-dim); background: transparent;
+    border: 1px solid var(--border-bright);
+    padding: 12px 20px; border-radius: 4px;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .print-trigger button:hover { color: var(--accent); border-color: var(--accent); }
+  .print-trigger button:active { transform: scale(0.98); }
+
   @media (max-width: 1300px) {
     .stats { grid-template-columns: repeat(4, 1fr); }
     .stat { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -485,6 +501,7 @@
       color: #555 !important;
     }
     .legend, .legend-item, #last-updated { color: #555 !important; }
+    .print-trigger { display: none !important; }
   }
 </style>
 </head>
@@ -514,6 +531,10 @@
 <section id="runners" class="runners"></section>
 
 <section id="race-stats" class="race-stats" hidden></section>
+
+<div class="print-trigger">
+  <button id="print-btn" type="button">Print Race Report</button>
+</div>
 
 <footer>
   <div class="legend">
@@ -1023,6 +1044,8 @@
     s[id] = nowCollapsed;
     saveLaplogState(s);
   });
+
+  document.getElementById('print-btn').addEventListener('click', () => window.print());
 
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') load();
