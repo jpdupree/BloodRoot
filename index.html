@@ -133,6 +133,7 @@
   .status-tight { color: var(--yellow); }
   .status-offpace { color: var(--red); }
   .status-notstarted { color: var(--text-muted); }
+  .status-finished { color: var(--accent); }
 
   .stats {
     display: grid; grid-template-columns: repeat(8, 1fr);
@@ -423,6 +424,7 @@
     .status-tight { color: #8a6700 !important; border-color: #8a6700 !important; }
     .status-offpace { color: #a82626 !important; border-color: #a82626 !important; }
     .status-notstarted { color: #555 !important; border-color: #555 !important; }
+    .status-finished { color: #b8431f !important; border-color: #b8431f !important; }
 
     /* Stat grid */
     .stats {
@@ -625,7 +627,9 @@
     const sodiumPerHr = lapHours > 0 ? totalSodium / lapHours : 0;
 
     let status = 'notstarted';
-    if (lapDurations.length > 0 && avgLap) {
+    if (lapDurations.length >= race.totalLoops) {
+      status = 'finished';
+    } else if (lapDurations.length > 0 && avgLap) {
       const avgPitForProjection = avgPit != null ? avgPit : 0;
       const projected = (avgLap + avgPitForProjection) * race.totalLoops;
       const cutoffSec = race.totalCutoffHours * 3600;
@@ -671,7 +675,7 @@
     if (durationSec == null) return '';
     // Lap colors mirror the runner's overall projected status. A slow lap only
     // earns a yellow/red badge if the projection actually shows tight/off-pace.
-    if (runnerStatus === 'onpace') return 'done';
+    if (runnerStatus === 'onpace' || runnerStatus === 'finished') return 'done';
     if (durationSec < 3.83 * 3600) return 'done';   // < 3:50 — fine given banked buffer
     if (durationSec < 4.17 * 3600) return 'slow';   // 3:50 - 4:10 — eating into buffer
     return 'danger';                                // > 4:10 — over with no margin
@@ -686,7 +690,7 @@
   }
 
   function statusLabel(s) {
-    return { onpace: 'On Pace', tight: 'Tight', offpace: 'Off Pace', notstarted: 'Not Started' }[s];
+    return { onpace: 'On Pace', tight: 'Tight', offpace: 'Off Pace', notstarted: 'Not Started', finished: 'Finished' }[s];
   }
 
   function renderCutoffs(race) {
