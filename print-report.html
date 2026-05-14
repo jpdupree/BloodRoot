@@ -143,6 +143,7 @@
   .status-onpace { color: var(--green); }
   .status-tight { color: var(--yellow); }
   .status-offpace { color: var(--red); }
+  .status-finished { color: var(--accent); }
 
   .stats {
     display: grid; grid-template-columns: repeat(4, 1fr);
@@ -571,7 +572,9 @@
     const paceSecPerMile = avgLap ? avgLap/race.loopDistance : null;
 
     let status = 'onpace';
-    if (lapDurations.length > 0 && avgLap) {
+    if (lapDurations.length >= race.totalLoops) {
+      status = 'finished';
+    } else if (lapDurations.length > 0 && avgLap) {
       const proj = (avgLap + (avgPit||0)) * race.totalLoops;
       const cutoffSec = race.totalCutoffHours * 3600;
       // "Tight" = projected finish within 2.5% of the cutoff (~57min at 38h).
@@ -602,7 +605,7 @@
 
   function lapClass(durSec, runnerStatus) {
     if (durSec == null) return '';
-    if (runnerStatus === 'onpace') return 'done';
+    if (runnerStatus === 'onpace' || runnerStatus === 'finished') return 'done';
     if (durSec < 3.83 * 3600) return 'done';
     if (durSec < 4.17 * 3600) return 'slow';
     return 'danger';
@@ -615,7 +618,7 @@
     return 'low';
   }
   function statusLabel(s) {
-    return { onpace: 'On Pace', tight: 'Tight', offpace: 'Off Pace' }[s] || s;
+    return { onpace: 'On Pace', tight: 'Tight', offpace: 'Off Pace', finished: 'Finished' }[s] || s;
   }
 
   function renderRunner(runner, race) {
